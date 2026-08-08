@@ -21,7 +21,6 @@ class AboutFragment : Fragment(), AdminPasswordDialog.Host {
     private val binding get() = _binding!!
 
     private var versionTaps = 0
-    private var firstTapTime = 0L
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,16 +34,11 @@ class AboutFragment : Fragment(), AdminPasswordDialog.Host {
         super.onViewCreated(view, savedInstanceState)
         binding.tvVersion.text = getString(R.string.about_version, BuildConfig.VERSION_NAME)
 
-        // Secret 7-tap on version label → admin password dialog
+        // Secret 3-tap on version label → admin password dialog.
+        // No time window — count any 3 consecutive taps.
         binding.tvVersion.setOnClickListener {
-            val now = System.currentTimeMillis()
-            if (now - firstTapTime > 2000) {
-                // reset window if user paused too long
-                versionTaps = 0
-                firstTapTime = now
-            }
             versionTaps++
-            if (versionTaps >= 7) {
+            if (versionTaps >= 3) {
                 versionTaps = 0
                 tryEnterAdmin()
             }
