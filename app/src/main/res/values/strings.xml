@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Мамсад</string>
+    <string name="app_tagline">Мамы ищут садик</string>
+
+    <!-- Bottom navigation -->
+    <string name="nav_catalog">Каталог</string>
+    <string name="nav_filters">Фильтры</string>
+    <string name="nav_favorites">Избранное</string>
+    <string name="nav_about">О нас</string>
+
+    <!-- Home -->
+    <string name="home_greeting">Здравствуйте, мама!</string>
+    <string name="home_subgreeting">Найдём садик для вашего малыша</string>
+    <string name="home_search_hint">Садик, район, услуга…</string>
+    <string name="home_quick_filters">Быстрые фильтры</string>
+    <string name="home_recent">Свежие садики</string>
+    <string name="home_cities">Города</string>
+    <string name="home_count_total">всего садиков в каталоге</string>
+    <string name="home_btn_open_catalog">Открыть каталог</string>
+    <string name="home_btn_open_filters">Подобрать садик</string>
+
+    <!-- Cities -->
+    <string name="city_korolyov">Королёв</string>
+    <string name="city_mytishchi">Мытищи</string>
+    <string name="city_all">Все города</string>
+
+    <!-- Types -->
+    <string name="type_all">Все типы</string>
+    <string name="type_private">Частный сад</string>
+    <string name="type_municipal">Муниципальный сад</string>
+    <string name="type_dev_center">Развивающий центр</string>
+
+    <!-- Categories -->
+    <string name="cat_nannies">Няни</string>
+    <string name="cat_nursery">Ясли</string>
+    <string name="cat_private_sads">Частные сады</string>
+    <string name="cat_dev_centers">Развивающие центры</string>
+    <string name="cat_circles">Кружки</string>
+    <string name="cat_sections">Секции</string>
+    <string name="cat_logopedists">Логопеды</string>
+    <string name="cat_psychologists">Психологи</string>
+    <string name="cat_tutors">Репетиторы</string>
+    <string name="cat_doctors">Детские врачи</string>
+    <string name="cat_animators">Аниматоры</string>
+    <string name="cat_parties">Детские праздники</string>
+    <string name="cat_camps">Лагеря</string>
+    <string name="cat_photographers">Фотографы</string>
+    <string name="cat_shops">Магазины</string>
+    <string name="cat_rent">Прокат товаров</string>
+    <string name="cat_babysitters">Бебиситтеры</string>
+
+    <!-- Catalog -->
+    <string name="catalog_title">Каталог садиков</string>
+    <string name="catalog_empty">Садики не найдены.\nПопробуйте изменить фильтры.</string>
+    <string name="catalog_loading">Загружаем садики…</string>
+    <string name="catalog_error">Не удалось загрузить данные.\nПроверьте подключение к интернету.</string>
+    <string name="catalog_btn_retry">Повторить</string>
+    <string name="catalog_btn_clear_filters">Сбросить фильтры</string>
+    <string name="catalog_results_count">%1$d садиков найдено</string>
+    <string name="catalog_pull_to_refresh">Потяните, чтобы обновить</string>
+
+    <!-- Filters -->
+    <string name="filters_title">Фильтры</string>
+    <string name="filters_section_city">Город</string>
+    <string name="filters_section_type">Тип учреждения</string>
+    <string name="filters_section_category">Категория</string>
+    <string name="filters_section_sort">Сортировка</string>
+    <string name="filters_section_search">Поиск по названию</string>
+    <string name="filters_search_hint">Например: Монтессори</string>
+    <string name="filters_sort_new">Сначала новые</string>
+    <string name="filters_sort_alpha">По алфавиту</string>
+    <string name="filters_sort_city">По городу</string>
+    <string name="filters_btn_apply">Применить</string>
+    <string name="filters_btn_reset">Сбросить всё</string>
+    <string name="filters_active_count">Активно фильтров: %1$d</string>
+
+    <!-- Detail -->
+    <string name="detail_section_description">Описание</string>
+    <string name="detail_section_tags">Теги</string>
+    <string name="detail_btn_favorite">В избранное</string>
+    <string name="detail_btn_unfavorite">Убрать из избранного</string>
+    <string name="detail_btn_call">Позвонить</string>
+    <string name="detail_btn_site">Открыть на mamsad.ru</string>
+    <string name="detail_btn_share">Поделиться</string>
+    <string name="detail_btn_route">Маршрут</string>
+    <string name="detail_added_to_favorites">Добавлено в избранное</string>
+    <string name="detail_removed_from_favorites">Удалено из избранного</string>
+    <string name="detail_share_template">Смотрите садик «%1$s» в Мамсад: %2$s</string>
+
+    <!-- Favorites -->
+    <string name="favorites_title">Избранное</string>
+    <string name="favorites_empty">Здесь будут садики,\nкоторые вы сохраните.\n\nНажмите ♥ на карточке,\nчтобы добавить в избранное.</string>
+
+    <!-- About -->
+    <string name="about_title">О нас</string>
+    <string name="about_app_name">Мамсад</string>
+    <string name="about_tagline">Мамы ищут садик</string>
+    <string name="about_version">Версия %1$s</string>
+    <string name="about_description">Мамсад — это приложение для мам, которые ищут идеальный садик для своего ребёнка. Каталог обновляется напрямую с сайта mamsad.ru: частные и муниципальные сады, развивающие центры, няни и репетиторы в Королёве и Мытищах.\n\nРеальные отзывы родителей, свободные места, цены и запись на экскурсию онлайн — всё в одном приложении.</string>
+    <string name="about_features_title">Возможности</string>
+    <string name="about_feature_1">• Каталог садиков с фильтрами по городу и типу</string>
+    <string name="about_feature_2">• Подробное описание каждого садика</string>
+    <string name="about_feature_3">• Избранное — сохраняйте понравившиеся сады</string>
+    <string name="about_feature_4">• Прямая ссылка на mamsad.ru для записи</string>
+    <string name="about_feature_5">• Поделиться карточкой садика с семьёй</string>
+    <string name="about_data_source">Источник данных</string>
+    <string name="about_data_source_text">Данные предоставляются сайтом mamsad.ru через WordPress REST API. Приложение является мостом к этому каталогу.</string>
+    <string name="about_btn_open_site">Открыть mamsad.ru</string>
+    <string name="about_btn_feedback">Связаться с разработчиком</string>
+
+    <!-- Common -->
+    <string name="common_loading">Загрузка…</string>
+    <string name="common_retry">Повторить</string>
+    <string name="common_close">Закрыть</string>
+    <string name="common_cancel">Отмена</string>
+    <string name="common_ok">ОК</string>
+    <string name="common_no_internet">Нет подключения к интернету</string>
+
+    <!-- Content descriptions for accessibility -->
+    <string name="cd_app_logo">Логотип Мамсад</string>
+    <string name="cd_search">Поиск</string>
+    <string name="cd_favorite">Избранное</string>
+    <string name="cd_back">Назад</string>
+    <string name="cd_share">Поделиться</string>
+    <string name="cd_city_icon">Город</string>
+    <string name="cd_type_icon">Тип учреждения</string>
+    <string name="cd_card_image">Изображение садика</string>
+</resources>

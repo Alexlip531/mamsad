@@ -1,0 +1,79 @@
+name: Build APK
+
+on:
+  push:
+    branches: [main, master]
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: gradle
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+        with:
+          packages: 'platform-tools build-tools;34.0.0 platforms;android-34'
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Build debug APK
+        run: ./gradlew assembleDebug --no-daemon --stacktrace
+
+      - name: Extract version
+        id: version
+        run: |
+          VERSION=$(grep -E 'versionName' app/build.gradle.kts | head -1 | sed -E 's/.*versionName = "([^"]+)".*/\1/')
+          CODE=$(grep -E 'versionCode' app/build.gradle.kts | head -1 | sed -E 's/.*versionCode = ([0-9]+).*/\1/')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "code=$CODE" >> $GITHUB_OUTPUT
+          echo "Detected version $VERSION (code $CODE)"
+
+      - name: Rename APK
+        run: |
+          mkdir -p artifacts
+          cp app/build/outputs/apk/debug/app-debug.apk artifacts/mamsad-${{ steps.version.outputs.version }}.apk
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mamsad-apk
+          path: artifacts/*.apk
+          retention-days: 30
+
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v') || github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.version.outputs.version }}
+          name: Мамсад v${{ steps.version.outputs.version }}
+          body: |
+            # Мамсад v${{ steps.version.outputs.version }}
+
+            Android-приложение «Мамы ищут садик» — каталог детских садов Королёва и Мытищ.
+
+            **Источник данных:** https://mamsad.ru/
+
+            ## Установка
+            1. Скачайте APK-файл ниже
+            2. Разрешите установку из неизвестных источников
+            3. Установите и запустите приложение
+          files: artifacts/mamsad-${{ steps.version.outputs.version }}.apk
+          generate_release_notes: false
+          prerelease: false

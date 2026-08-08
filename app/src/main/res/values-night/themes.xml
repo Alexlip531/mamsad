@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.Mamsad" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/mamsad_coral</item>
+        <item name="colorOnPrimary">@color/mamsad_white</item>
+        <item name="colorPrimaryContainer">@color/mamsad_coral_dark</item>
+        <item name="colorOnPrimaryContainer">@color/mamsad_coral_light</item>
+        <item name="colorSecondary">@color/mamsad_sage</item>
+        <item name="colorOnSecondary">@color/mamsad_white</item>
+        <item name="colorSecondaryContainer">@color/mamsad_sage_dark</item>
+        <item name="colorOnSecondaryContainer">@color/mamsad_sage_light</item>
+        <item name="android:colorBackground">@color/mamsad_dark_bg</item>
+        <item name="colorOnBackground">@color/mamsad_dark_ink</item>
+        <item name="colorSurface">@color/mamsad_dark_card</item>
+        <item name="colorOnSurface">@color/mamsad_dark_ink</item>
+        <item name="colorSurfaceVariant">@color/mamsad_dark_divider</item>
+        <item name="colorOnSurfaceVariant">@color/mamsad_dark_ink_soft</item>
+        <item name="colorOutline">@color/mamsad_dark_divider</item>
+        <item name="android:statusBarColor">@color/mamsad_dark_bg</item>
+        <item name="android:navigationBarColor">@color/mamsad_dark_bg</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+    </style>
+</resources>

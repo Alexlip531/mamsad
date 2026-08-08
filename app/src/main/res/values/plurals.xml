@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="kindergartens_count">
+        <item quantity="one">%d садик</item>
+        <item quantity="few">%d садика</item>
+        <item quantity="many">%d садиков</item>
+        <item quantity="other">%d садиков</item>
+    </plurals>
+    <plurals name="kindergartens_found">
+        <item quantity="one">Найден %d садик</item>
+        <item quantity="few">Найдено %d садика</item>
+        <item quantity="many">Найдено %d садиков</item>
+        <item quantity="other">Найдено %d садиков</item>
+    </plurals>
+</resources>

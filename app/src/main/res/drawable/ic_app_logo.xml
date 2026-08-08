@@ -1,0 +1,20 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+    <!-- Coral heart -->
+    <path
+        android:fillColor="#FF7A6B"
+        android:pathData="M60,86 C60,86 30,66 30,46 C30,36 38,28 48,28 C54,28 58,32 60,36 C62,32 66,28 72,28 C82,28 90,36 90,46 C90,66 60,86 60,86 Z" />
+    <!-- Sage sprout leaves -->
+    <path
+        android:fillColor="#7FB069"
+        android:pathData="M52,62 C46,56 42,52 42,46 C42,42 46,40 50,42 C54,44 54,52 52,62 Z" />
+    <path
+        android:fillColor="#7FB069"
+        android:pathData="M68,62 C74,56 78,52 78,46 C78,42 74,40 70,42 C66,44 66,52 68,62 Z" />
+    <path
+        android:fillColor="#7FB069"
+        android:pathData="M58,52 L62,52 L62,72 L58,72 Z" />
+</vector>

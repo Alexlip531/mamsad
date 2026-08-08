@@ -1,0 +1,54 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="280dp"
+    android:height="200dp"
+    android:viewportWidth="280"
+    android:viewportHeight="200">
+    <!-- Decorative hero scene: heart + sprout + sun, in Mamsad palette -->
+
+    <!-- Soft cloud background blobs -->
+    <path
+        android:fillColor="#FFE6DF"
+        android:pathData="M40,140 C20,140 10,128 18,118 C8,118 0,108 12,98 C8,86 22,80 32,86 C36,76 56,76 60,86 C72,80 86,90 80,102 C92,106 90,122 78,124 C82,134 70,142 60,138 C52,144 44,144 40,140 Z" />
+    <path
+        android:fillColor="#E5F5DC"
+        android:pathData="M220,150 C206,150 198,140 204,132 C196,132 190,124 200,116 C196,108 208,104 216,108 C220,100 236,100 240,108 C250,104 260,114 254,124 C262,128 260,140 250,142 C254,150 244,156 236,152 C230,156 224,156 220,150 Z" />
+
+    <!-- Sun -->
+    <path
+        android:fillColor="#FFC857"
+        android:pathData="M232,42 m-22,0 a22,22 0 1,0 44,0 a22,22 0 1,0 -44,0" />
+    <path
+        android:strokeColor="#FFC857"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M232,8 L232,16 M232,68 L232,76 M198,42 L206,42 M258,42 L266,42 M208,18 L214,24 M250,60 L256,66 M256,18 L250,24 M214,60 L208,66" />
+
+    <!-- Big heart center -->
+    <path
+        android:fillColor="#FF7A6B"
+        android:pathData="M140,170 C140,170 90,135 90,100 C90,82 104,68 122,68 C132,68 138,74 140,82 C142,74 148,68 158,68 C176,68 190,82 190,100 C190,135 140,170 140,170 Z" />
+
+    <!-- Sprout (green leaves + stem) growing out of heart -->
+    <path
+        android:fillColor="#7FB069"
+        android:pathData="M130,120 C116,108 110,100 110,90 C110,84 118,80 126,84 C134,88 134,102 130,120 Z" />
+    <path
+        android:fillColor="#7FB069"
+        android:pathData="M150,120 C164,108 170,100 170,90 C170,84 162,80 154,84 C146,88 146,102 150,120 Z" />
+    <path
+        android:fillColor="#5C8748"
+        android:pathData="M136,100 L144,100 L144,138 L136,138 Z" />
+
+    <!-- Small stars/sparkles -->
+    <path
+        android:fillColor="#B8A1E3"
+        android:pathData="M50,60 L54,68 L62,72 L54,76 L50,84 L46,76 L38,72 L46,68 Z" />
+    <path
+        android:fillColor="#A8D8EA"
+        android:pathData="M22,90 L24,94 L28,96 L24,98 L22,102 L20,98 L16,96 L20,94 Z" />
+    <path
+        android:fillColor="#FFC857"
+        android:pathData="M195,160 L197,164 L201,166 L197,168 L195,172 L193,168 L189,166 L193,164 Z" />
+
+</vector>

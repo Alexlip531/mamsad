@@ -1,0 +1,26 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="160dp"
+    android:viewportWidth="200"
+    android:viewportHeight="160">
+    <!-- Empty favorites illustration: outline heart with broken sprout -->
+    <path
+        android:strokeColor="#FFB4A7"
+        android:strokeWidth="4"
+        android:strokeLineJoin="round"
+        android:fillColor="#00000000"
+        android:pathData="M100,140 C100,140 50,108 50,76 C50,60 64,48 80,48 C90,48 96,54 100,62 C104,54 110,48 120,48 C136,48 150,60 150,76 C150,108 100,140 100,140 Z" />
+    <path
+        android:fillColor="#B7D89C"
+        android:pathData="M94,90 C86,82 82,76 82,70 C82,66 88,64 92,67 C96,70 96,80 94,90 Z" />
+    <path
+        android:fillColor="#B7D89C"
+        android:pathData="M106,90 C114,82 118,76 118,70 C118,66 112,64 108,67 C104,70 104,80 106,90 Z" />
+    <!-- Sparkles around -->
+    <path
+        android:fillColor="#FFC857"
+        android:pathData="M40,40 L42,44 L46,46 L42,48 L40,52 L38,48 L34,46 L38,44 Z" />
+    <path
+        android:fillColor="#B8A1E3"
+        android:pathData="M160,30 L162,34 L166,36 L162,38 L160,42 L158,38 L154,36 L158,34 Z" />
+</vector>

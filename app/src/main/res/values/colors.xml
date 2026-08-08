@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Brand: "Мамы ищут садик" — warm, tender, hopeful palette -->
+    <color name="mamsad_coral">#FF7A6B</color>          <!-- primary: warm coral, motherly warmth -->
+    <color name="mamsad_coral_dark">#E85A4A</color>
+    <color name="mamsad_coral_light">#FFB4A7</color>
+    <color name="mamsad_sage">#7FB069</color>            <!-- secondary: sage green, growth -->
+    <color name="mamsad_sage_dark">#5C8748</color>
+    <color name="mamsad_sage_light">#B7D89C</color>
+    <color name="mamsad_sun">#FFC857</color>             <!-- accent: sunny yellow -->
+    <color name="mamsad_lilac">#B8A1E3</color>           <!-- accent: soft lilac, child-like -->
+    <color name="mamsad_sky">#A8D8EA</color>             <!-- accent: calm sky -->
+    <color name="mamsad_cream">#FFF7F2</color>           <!-- background: warm cream -->
+    <color name="mamsad_cream_dark">#F4E7DC</color>      <!-- card bg in dark areas -->
+    <color name="mamsad_ink">#2D2A28</color>             <!-- primary text -->
+    <color name="mamsad_ink_soft">#5C5650</color>        <!-- secondary text -->
+    <color name="mamsad_ink_mute">#9A938B</color>        <!-- tertiary text -->
+    <color name="mamsad_white">#FFFFFF</color>
+    <color name="mamsad_divider">#EDE3D9</color>
+
+    <!-- Dark theme -->
+    <color name="mamsad_dark_bg">#1A1816</color>
+    <color name="mamsad_dark_card">#25221F</color>
+    <color name="mamsad_dark_ink">#F4E7DC</color>
+    <color name="mamsad_dark_ink_soft">#B7AFA5</color>
+    <color name="mamsad_dark_divider">#3A352F</color>
+
+    <!-- Status colors -->
+    <color name="mamsad_favorite">#FF5C8A</color>        <!-- rose for favorites -->
+    <color name="mamsad_private_sad">#FFC857</color>     <!-- yellow tag for private -->
+    <color name="mamsad_municipal_sad">#7FB069</color>   <!-- green tag for municipal -->
+    <color name="mamsad_dev_center">#B8A1E3</color>      <!-- lilac tag for dev centers -->
+</resources>

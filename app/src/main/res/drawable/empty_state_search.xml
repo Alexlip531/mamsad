@@ -1,0 +1,27 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="160dp"
+    android:viewportWidth="200"
+    android:viewportHeight="160">
+    <!-- "No results" illustration: magnifier + small sprout -->
+    <path
+        android:strokeColor="#FFB4A7"
+        android:strokeWidth="5"
+        android:fillColor="#00000000"
+        android:pathData="M70,70 m-30,0 a30,30 0 1,0 60,0 a30,30 0 1,0 -60,0" />
+    <path
+        android:strokeColor="#FFB4A7"
+        android:strokeWidth="6"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M92,92 L120,120" />
+    <path
+        android:fillColor="#B7D89C"
+        android:pathData="M148,80 C140,72 136,66 136,60 C136,56 142,54 146,57 C150,60 150,70 148,80 Z" />
+    <path
+        android:fillColor="#B7D89C"
+        android:pathData="M160,80 C168,72 172,66 172,60 C172,56 166,54 162,57 C158,60 158,70 160,80 Z" />
+    <path
+        android:fillColor="#5C8748"
+        android:pathData="M150,60 L158,60 L158,90 L150,90 Z" />
+</vector>
