@@ -12,7 +12,12 @@ import java.util.concurrent.TimeUnit
 class MamsadApp : Application() {
 
     val database by lazy { MamsadDb.get(this) }
-    val repository by lazy { MamsadRepository(dao = database.orgDao()) }
+    val repository by lazy {
+        MamsadRepository(
+            dao = database.orgDao(),
+            adminDao = database.adminDao()
+        )
+    }
 
     companion object {
         lateinit var instance: MamsadApp

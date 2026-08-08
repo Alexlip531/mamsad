@@ -161,4 +161,46 @@
     <string name="detail_no_price">Цена не указана</string>
     <string name="detail_no_rating">Нет оценок</string>
     <string name="detail_phone">Телефон</string>
+
+    <!-- Admin panel -->
+    <string name="admin_title">Админ-панель</string>
+    <string name="admin_edit_title">Редактирование</string>
+    <string name="admin_password_title">Вход в админку</string>
+    <string name="admin_password_message">Введите пароль администратора</string>
+    <string name="admin_password_hint">Пароль</string>
+    <string name="admin_password_current">Текущий пароль</string>
+    <string name="admin_password_new">Новый пароль</string>
+    <string name="admin_password_confirm">Повторите пароль</string>
+    <string name="admin_password_too_short">Минимум 4 символа</string>
+    <string name="admin_password_mismatch">Пароли не совпадают</string>
+    <string name="admin_password_changed">Пароль изменён</string>
+    <string name="admin_wrong_password">Неверный пароль</string>
+    <string name="admin_unlocked">Админ-режим разблокирован</string>
+    <string name="admin_btn_unlock">Войти</string>
+    <string name="admin_btn_change_password">Сменить пароль</string>
+    <string name="admin_btn_clear_all">Сбросить всё</string>
+    <string name="admin_btn_edit">Изменить</string>
+    <string name="admin_btn_save">Сохранить</string>
+    <string name="admin_btn_reset">Сбросить правки</string>
+    <string name="admin_saved">Правки сохранены</string>
+    <string name="admin_reset_confirm">Сбросить все правки для этого садика? Восстановятся данные с mamsad.ru.</string>
+    <string name="admin_reset_done">Правки сброшены</string>
+    <string name="admin_clear_all_confirm">Удалить ВСЕ локальные правки для всех садиков? Действие необратимо.</string>
+    <string name="admin_cleared">Все правки удалены</string>
+    <string name="admin_badge_edited">ИЗМЕНИЛИ</string>
+    <string name="admin_stat_total">всего</string>
+    <string name="admin_stat_edited">с правками</string>
+    <string name="admin_stat_hidden">скрыто</string>
+    <string name="admin_toggle_featured">Закрепить</string>
+    <string name="admin_toggle_hidden">Скрыть</string>
+    <string name="admin_section_overrides">Правки</string>
+    <string name="admin_section_overrides_hint">Заполните только те поля, которые хотите переопределить. Пустые поля используют оригинальные данные с mamsad.ru.</string>
+    <string name="admin_field_title">Своё название</string>
+    <string name="admin_field_excerpt">Свой краткий текст</string>
+    <string name="admin_field_address">Свой адрес</string>
+    <string name="admin_field_price">Цена (₽/мес)</string>
+    <string name="admin_field_lat">Широта</string>
+    <string name="admin_field_lng">Долгота</string>
+    <string name="admin_field_rating">Рейтинг (0–5)</string>
+    <string name="admin_empty">Нет садиков в кэше. Обновите каталог на главной.</string>
 </resources>

@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -12,8 +13,8 @@ android {
         applicationId = "com.zai.mamsad"
         minSdk = 24
         targetSdk = 34
-        versionCode = 2
-        versionName = "1.1.0"
+        versionCode = 3
+        versionName = "1.2.0"
         vectorDrawables { useSupportLibrary = true }
     }
 
@@ -78,6 +79,9 @@ dependencies {
 
     // WorkManager — periodic background refresh + push notifications
     implementation("androidx.work:work-runtime-ktx:2.9.0")
+
+    // EncryptedSharedPreferences — for storing admin password securely
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
 
     // Moshi codegen for @JsonClass(generateAdapter = true)
     ksp("com.squareup.moshi:moshi-kotlin-codegen:1.15.0")

@@ -69,7 +69,29 @@
     <fragment
         android:id="@+id/nav_about"
         android:name="com.zai.mamsad.ui.about.AboutFragment"
-        android:label="@string/about_title" />
+        android:label="@string/about_title">
+        <action
+            android:id="@+id/action_about_to_admin"
+            app:destination="@id/nav_admin" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_admin"
+        android:name="com.zai.mamsad.ui.admin.AdminFragment"
+        android:label="@string/admin_title">
+        <action
+            android:id="@+id/action_admin_to_edit"
+            app:destination="@id/nav_admin_edit" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_admin_edit"
+        android:name="com.zai.mamsad.ui.admin.AdminEditFragment"
+        android:label="@string/admin_edit_title">
+        <argument
+            android:name="orgId"
+            app:argType="integer" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_detail"

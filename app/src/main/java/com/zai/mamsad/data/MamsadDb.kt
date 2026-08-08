@@ -6,12 +6,13 @@ import androidx.room.RoomDatabase
 import android.content.Context
 
 @Database(
-    entities = [OrgEntity::class],
-    version = 1,
+    entities = [OrgEntity::class, AdminOverride::class],
+    version = 2,
     exportSchema = false
 )
 abstract class MamsadDb : RoomDatabase() {
     abstract fun orgDao(): OrgDao
+    abstract fun adminDao(): AdminDao
 
     companion object {
         @Volatile private var INSTANCE: MamsadDb? = null

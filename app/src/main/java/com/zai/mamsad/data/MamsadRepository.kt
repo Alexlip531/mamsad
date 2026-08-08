@@ -31,12 +31,15 @@ import kotlinx.coroutines.withContext
 class MamsadRepository(
     private val api: MamsadApi = NetworkClient.api,
     private val dao: OrgDao,
+    private val adminDao: AdminDao,
     private val overridesUrl: String = DEFAULT_OVERRIDES_URL
 ) {
 
     fun observeAll(): Flow<List<OrgEntity>> = dao.observeAll()
     fun observeFavorites(): Flow<List<OrgEntity>> = dao.observeFavorites()
     fun observeById(id: Int): Flow<OrgEntity?> = dao.observeById(id)
+
+    fun observeAdminOverrides(): Flow<List<AdminOverride>> = adminDao.observeAll()
 
     suspend fun fetchOrgs(): Result<List<OrgEntity>> = runCatching {
         // 1. Fetch all orgs with embedded terms
@@ -58,15 +61,19 @@ class MamsadRepository(
             }
         }
 
-        // 3. Fetch admin overrides
+        // 3. Fetch remote admin overrides (GitHub raw)
         val overrides = try { fetchOverrides() } catch (_: Throwable) { OverridesFile() }
         val overrideMap = overrides.orgs.associateBy { it.id }
+
+        // 3b. Fetch LOCAL admin overrides (this device's admin edits — top priority)
+        val localOverrides = adminDao.getAll().associateBy { it.id }
 
         // 4. Merge into entities
         val entities = wpOrgs.map { wp ->
             val geo = geoMap[wp.id]
-            val ov = overrideMap[wp.id]
-            wp.toEntity(geo, ov)
+            val remoteOv = overrideMap[wp.id]
+            val localOv = localOverrides[wp.id]
+            wp.toEntity(geo, remoteOv).applyLocalOverride(localOv)
         }
         // Filter out hidden orgs
         val visible = entities.filter { !it.hidden }
@@ -225,6 +232,65 @@ class MamsadRepository(
             .replace("&#39;", "'")
             .replace("&#038;", "&")
             .trim()
+    }
+
+    /**
+     * Apply a local admin override (from this device) on top of an entity.
+     * Local override has the highest priority — it wins over both mamsad.ru
+     * source data and remote GitHub overrides.json.
+     */
+    private fun OrgEntity.applyLocalOverride(local: AdminOverride?): OrgEntity {
+        if (local == null) return this
+        return copy(
+            title = local.title ?: title,
+            excerpt = local.excerpt ?: excerpt,
+            content = local.content ?: content,
+            address = local.address ?: address,
+            priceFrom = local.priceFrom ?: priceFrom,
+            lat = local.lat ?: lat,
+            lng = local.lng ?: lng,
+            rating = local.rating ?: rating,
+            featured = local.featured ?: featured,
+            hidden = local.hidden ?: hidden
+        )
+    }
+
+    // ============================================================
+    // Local admin CRUD — used by AdminFragment / AdminEditFragment
+    // ============================================================
+
+    suspend fun saveAdminOverride(override: AdminOverride) {
+        adminDao.upsert(override)
+        // Re-apply: reload from API would be wasteful — just patch the cached entity
+        val cached = dao.getById(override.orgId) ?: return
+        dao.upsertAll(listOf(cached.run {
+            copy(
+                title = override.title ?: title,
+                excerpt = override.excerpt ?: excerpt,
+                content = override.content ?: content,
+                address = override.address ?: address,
+                priceFrom = override.priceFrom ?: priceFrom,
+                lat = override.lat ?: lat,
+                lng = override.lng ?: lng,
+                rating = override.rating ?: rating,
+                featured = override.featured ?: featured,
+                hidden = override.hidden ?: hidden,
+                updatedAt = System.currentTimeMillis()
+            )
+        }))
+    }
+
+    suspend fun deleteAdminOverride(orgId: Int) {
+        adminDao.delete(orgId)
+        // After removing override, the cached entity keeps the patched values
+        // until the next refresh. That's acceptable — admin gets a snackbar
+        // saying "refresh catalog to restore original values".
+    }
+
+    suspend fun getAdminOverride(orgId: Int): AdminOverride? = adminDao.getById(orgId)
+
+    suspend fun clearAllAdminOverrides() {
+        adminDao.clearAll()
     }
 
     private suspend fun <T> Flow<T>.firstSafe(): T = first()
