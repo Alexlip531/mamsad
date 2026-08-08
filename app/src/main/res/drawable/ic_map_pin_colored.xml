@@ -1,0 +1,16 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="36dp"
+    android:height="48dp"
+    android:viewportWidth="36"
+    android:viewportHeight="48">
+    <!-- Pin shape with white border -->
+    <path
+        android:fillColor="#FF7A6B"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1.5"
+        android:pathData="M18,1 C9.16,1 2,8.16 2,17 C2,28 18,47 18,47 C18,47 34,28 34,17 C34,8.16 26.84,1 18,1 Z" />
+    <!-- White inner circle -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M18,12 m-7,0 a7,7 0 1,0 14,0 a7,7 0 1,0 -14,0" />
+</vector>

@@ -12,8 +12,8 @@ android {
         applicationId = "com.zai.mamsad"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = 2
+        versionName = "1.1.0"
         vectorDrawables { useSupportLibrary = true }
     }
 
@@ -72,4 +72,13 @@ dependencies {
 
     // Coil for image loading
     implementation("io.coil-kt:coil:2.5.0")
+
+    // osmdroid — free OpenStreetMap-based map (no API key needed)
+    implementation("org.osmdroid:osmdroid-android:6.1.18")
+
+    // WorkManager — periodic background refresh + push notifications
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
+
+    // Moshi codegen for @JsonClass(generateAdapter = true)
+    ksp("com.squareup.moshi:moshi-kotlin-codegen:1.15.0")
 }

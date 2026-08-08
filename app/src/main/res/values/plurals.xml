@@ -12,4 +12,10 @@
         <item quantity="many">Найдено %d садиков</item>
         <item quantity="other">Найдено %d садиков</item>
     </plurals>
+    <plurals name="notif_new_kindergartens_title">
+        <item quantity="one">%d новый садик в Мамсад</item>
+        <item quantity="few">%d новых садика в Мамсад</item>
+        <item quantity="many">%d новых садиков в Мамсад</item>
+        <item quantity="other">%d новых садиков в Мамсад</item>
+    </plurals>
 </resources>

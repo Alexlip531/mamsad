@@ -126,4 +126,40 @@
     <string name="cd_city_icon">Город</string>
     <string name="cd_type_icon">Тип учреждения</string>
     <string name="cd_card_image">Изображение садика</string>
+    <string name="cd_map_marker">Садик на карте</string>
+
+    <!-- Map -->
+    <string name="nav_map">Карта</string>
+    <string name="map_title">Карта садиков</string>
+    <string name="map_loading">Загружаем карту…</string>
+    <string name="map_no_coords">У этого садика пока нет координат</string>
+    <string name="map_btn_list">Списком</string>
+    <string name="map_btn_open_detail">Подробнее</string>
+
+    <!-- Reviews -->
+    <string name="reviews_title">Отзывы родителей</string>
+    <string name="reviews_count">%1$d отзывов</string>
+    <string name="reviews_empty">Отзывов пока нет. Будьте первым!</string>
+    <string name="reviews_loading">Загружаем отзывы…</string>
+    <string name="reviews_error">Не удалось загрузить отзывы</string>
+
+    <!-- Notifications -->
+    <string name="notif_channel_name">Новые садики</string>
+    <string name="notif_channel_desc">Уведомления о новых детских садах в каталоге</string>
+    <string name="notif_new_text">Новые садики: %1$s</string>
+    <string name="notif_new_text_empty">Откройте приложение, чтобы посмотреть</string>
+
+    <!-- Detail extensions -->
+    <string name="detail_section_info">Информация</string>
+    <string name="detail_section_reviews">Отзывы</string>
+    <string name="detail_address">Адрес</string>
+    <string name="detail_price">Цена от</string>
+    <string name="detail_rating">Рейтинг</string>
+    <string name="detail_reviews_count">%1$d отзывов</string>
+    <string name="detail_price_value">%1$s ₽/мес</string>
+    <string name="detail_no_address">Адрес не указан</string>
+    <string name="detail_no_price">Цена не указана</string>
+    <string name="detail_no_rating">Нет оценок</string>
+    <string name="detail_btn_route">Маршрут</string>
+    <string name="detail_phone">Телефон</string>
 </resources>

@@ -3,6 +3,9 @@ package com.zai.mamsad.ui.detail
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,9 +18,13 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
 import com.zai.mamsad.R
+import com.zai.mamsad.api.WpReview
 import com.zai.mamsad.databinding.FragmentDetailBinding
+import com.zai.mamsad.databinding.ItemReviewBinding
 import com.zai.mamsad.ui.CatalogViewModel
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class DetailFragment : Fragment() {
 
@@ -29,6 +36,8 @@ class DetailFragment : Fragment() {
     private val orgId: Int by lazy {
         arguments?.getInt("orgId") ?: 0
     }
+
+    private val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale("ru"))
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,58 +59,173 @@ class DetailFragment : Fragment() {
         }
 
         binding.btnFavorite.setOnClickListener {
-            // Toggle favorited state — observed via Room Flow
             val isFav = binding.btnFavorite.tag as? Boolean ?: false
             viewModel.setFavorite(orgId, !isFav)
         }
 
-        binding.btnShare.setOnClickListener {
-            shareCurrent()
-        }
+        binding.btnShare.setOnClickListener { shareCurrent() }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.getById(orgId).collect { org ->
-                    if (org == null) {
-                        // Not in cache yet — wait for refresh
-                        return@collect
-                    }
-                    binding.toolbar.title = org.title
-                    binding.tvDetailTitle.text = org.title
-                    binding.tvDetailCity.text = org.cityName
-                    binding.tvDetailType.text = org.typeName
-                    binding.tvDetailDescription.text = org.excerpt.ifBlank {
-                        org.content.replace(Regex("<[^>]*>"), "").trim()
-                    }
-                    binding.tvSourceLink.text = org.link.removePrefix("https://")
-                    binding.tvSourceLink.tag = org.link
-
-                    // Tags (categories)
-                    if (org.categoryNames.isNotBlank()) {
-                        binding.sectionTags.isVisible = true
-                        binding.chipsTags.removeAllViews()
-                        org.categoryNames.split(",").forEach { name ->
-                            val chip = Chip(requireContext())
-                            chip.text = name.trim()
-                            chip.isClickable = false
-                            chip.setChipBackgroundColorResource(R.color.mamsad_cream_dark)
-                            binding.chipsTags.addView(chip)
-                        }
-                    } else {
-                        binding.sectionTags.isVisible = false
-                    }
-
-                    // Favorite button state
-                    val isFav = org.isFavorite
-                    binding.btnFavorite.tag = isFav
-                    binding.btnFavorite.isSelected = isFav
-                    binding.btnFavorite.text = getString(
-                        if (isFav) R.string.detail_btn_unfavorite else R.string.detail_btn_favorite
-                    )
-                }
+                launch { observeOrg() }
+                launch { observeReviews() }
             }
         }
     }
+
+    private suspend fun observeOrg() {
+        viewModel.getById(orgId).collect { org ->
+            if (org == null) return@collect
+            binding.toolbar.title = org.title
+            binding.tvDetailTitle.text = org.title
+            binding.tvDetailCity.text = org.cityName
+            binding.tvDetailType.text = org.typeName
+            binding.tvDetailDescription.text = org.excerpt.ifBlank {
+                org.content.replace(Regex("<[^>]*>"), "").trim()
+            }
+            binding.tvSourceLink.text = org.link.removePrefix("https://")
+            binding.tvSourceLink.tag = org.link
+
+            // Address
+            if (org.address.isNotBlank()) {
+                binding.tvDetailAddress.text = org.address
+                binding.tvDetailAddress.isVisible = true
+                binding.tvDetailAddressEmpty.isVisible = false
+            } else {
+                binding.tvDetailAddress.isVisible = false
+                binding.tvDetailAddressEmpty.isVisible = true
+            }
+
+            // Price
+            if (org.priceFrom.isNotBlank()) {
+                val price = org.priceFrom.replace(Regex("\\D"), "")
+                val formatted = if (price.length >= 4) {
+                    "${price.dropLast(3)} ${price.takeLast(3)} ₽/мес"
+                } else {
+                    "$price ₽/мес"
+                }
+                binding.tvDetailPrice.text = formatted
+                binding.tvDetailPrice.isVisible = true
+                binding.tvDetailPriceEmpty.isVisible = false
+            } else {
+                binding.tvDetailPrice.isVisible = false
+                binding.tvDetailPriceEmpty.isVisible = true
+            }
+
+            // Rating
+            if (org.rating != null && org.rating > 0) {
+                binding.badgeRating.isVisible = true
+                binding.tvDetailRatingValue.text = String.format(Locale.US, "%.1f", org.rating)
+                val stars = buildStars(org.rating)
+                binding.tvDetailRatingStars.text = stars
+                val countText = if (org.reviewCount > 0) {
+                    "(${org.reviewCount} ${pluralReviews(org.reviewCount)})"
+                } else ""
+                binding.tvDetailReviewCount.text = countText
+            } else {
+                binding.badgeRating.isVisible = false
+            }
+
+            // Tags
+            if (org.categoryNames.isNotBlank()) {
+                binding.sectionTags.isVisible = true
+                binding.chipsTags.removeAllViews()
+                org.categoryNames.split(",").forEach { name ->
+                    val chip = Chip(requireContext())
+                    chip.text = name.trim()
+                    chip.isClickable = false
+                    chip.setChipBackgroundColorResource(R.color.mamsad_cream_dark)
+                    binding.chipsTags.addView(chip)
+                }
+            } else {
+                binding.sectionTags.isVisible = false
+            }
+
+            // Favorite button state
+            val isFav = org.isFavorite
+            binding.btnFavorite.tag = isFav
+            binding.btnFavorite.isSelected = isFav
+            binding.btnFavorite.text = getString(
+                if (isFav) R.string.detail_btn_unfavorite else R.string.detail_btn_favorite
+            )
+
+            // Trigger reviews load (only once per org)
+            viewModel.loadReviews(orgId)
+        }
+    }
+
+    private fun buildStars(rating: Float): String {
+        val full = rating.toInt()
+        val half = (rating - full) >= 0.5f
+        val sb = StringBuilder()
+        repeat(full) { sb.append("★") }
+        if (half) sb.append("★")
+        val empty = 5 - sb.length
+        if (empty > 0) {
+            sb.append(" ")
+            repeat(empty) { sb.append("☆") }
+        }
+        return sb.toString().trim()
+    }
+
+    private fun pluralReviews(n: Int): String {
+        return when {
+            n % 10 == 1 && n % 100 != 11 -> "отзыв"
+            n % 10 in 2..4 && (n % 100 < 10 || n % 100 >= 20) -> "отзыва"
+            else -> "отзывов"
+        }
+    }
+
+    private suspend fun observeReviews() {
+        viewModel.reviews.collect { reviews ->
+            if (reviews.isEmpty()) {
+                if (viewModel.reviewsLoading.value) {
+                    binding.reviewsProgress.isVisible = true
+                    binding.reviewsEmpty.isVisible = false
+                    binding.reviewsError.isVisible = false
+                    binding.sectionReviews.isVisible = true
+                } else if (viewModel.reviewsError.value) {
+                    binding.reviewsProgress.isVisible = false
+                    binding.reviewsEmpty.isVisible = false
+                    binding.reviewsError.isVisible = true
+                    binding.sectionReviews.isVisible = true
+                } else {
+                    binding.sectionReviews.isVisible = false
+                }
+                return@collect
+            }
+            binding.sectionReviews.isVisible = true
+            binding.reviewsProgress.isVisible = false
+            binding.reviewsError.isVisible = false
+            binding.reviewsEmpty.isVisible = reviews.isEmpty()
+            binding.reviewsContainer.removeAllViews()
+            reviews.forEach { review ->
+                val item = ItemReviewBinding.inflate(layoutInflater, binding.reviewsContainer, false)
+                item.tvReviewAuthor.text = review.title.rendered.stripHtml()
+                item.tvReviewText.text = review.content.rendered.stripHtml()
+                item.tvReviewDate.text = try {
+                    val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US).parse(review.date)
+                    dateFormat.format(date)
+                } catch (_: Throwable) { "" }
+                item.btnReviewOpen.setOnClickListener {
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(review.link))
+                    startActivity(Intent.createChooser(intent, "Открыть в браузере"))
+                }
+                binding.reviewsContainer.addView(item.root)
+            }
+        }
+    }
+
+    private fun String.stripHtml(): String =
+        replace(Regex("<[^>]*>"), "")
+            .replace("&nbsp;", " ")
+            .replace("&amp;", "&")
+            .replace("&lt;", "<")
+            .replace("&gt;", ">")
+            .replace("&quot;", "\"")
+            .replace("&#39;", "'")
+            .replace("&#038;", "&")
+            .trim()
 
     private fun shareCurrent() {
         val title = binding.tvDetailTitle.text.toString()

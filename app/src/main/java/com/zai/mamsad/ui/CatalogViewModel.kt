@@ -8,6 +8,7 @@ import com.zai.mamsad.data.CatalogFilter
 import com.zai.mamsad.data.MamsadRepository
 import com.zai.mamsad.data.OrgEntity
 import com.zai.mamsad.data.SortMode
+import com.zai.mamsad.api.WpReview
 import com.zai.mamsad.api.WpTerm
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -70,6 +71,19 @@ class CatalogViewModel(
     private val _hasInitialData = MutableStateFlow(false)
     val hasInitialData: StateFlow<Boolean> = _hasInitialData.asStateFlow()
 
+    // Reviews state — shared by DetailFragment
+    private val _reviews = MutableStateFlow<List<WpReview>>(emptyList())
+    val reviews: StateFlow<List<WpReview>> = _reviews.asStateFlow()
+
+    private val _reviewsLoading = MutableStateFlow(false)
+    val reviewsLoading: StateFlow<Boolean> = _reviewsLoading.asStateFlow()
+
+    private val _reviewsError = MutableStateFlow(false)
+    val reviewsError: StateFlow<Boolean> = _reviewsError.asStateFlow()
+
+    var reviewsOrgId: Int = 0
+        private set
+
     init {
         refresh()
         loadTaxonomies()
@@ -98,6 +112,22 @@ class CatalogViewModel(
             repo.fetchCities().onSuccess { _cities.value = it }
             repo.fetchTypes().onSuccess { _types.value = it }
             repo.fetchCategories().onSuccess { _categories.value = it }
+        }
+    }
+
+    fun loadReviews(forOrgId: Int) {
+        if (reviewsOrgId == forOrgId && _reviews.value.isNotEmpty()) return
+        reviewsOrgId = forOrgId
+        viewModelScope.launch {
+            _reviewsLoading.value = true
+            _reviewsError.value = false
+            val result = repo.fetchReviews()
+            result.onSuccess { allReviews ->
+                _reviews.value = allReviews
+            }.onFailure {
+                _reviewsError.value = true
+            }
+            _reviewsLoading.value = false
         }
     }
 

@@ -20,6 +20,18 @@
         <action
             android:id="@+id/action_home_to_favorites"
             app:destination="@id/nav_favorites" />
+        <action
+            android:id="@+id/action_home_to_map"
+            app:destination="@id/nav_map" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_map"
+        android:name="com.zai.mamsad.ui.map.MapFragment"
+        android:label="@string/map_title">
+        <action
+            android:id="@+id/action_map_to_detail"
+            app:destination="@id/nav_detail" />
     </fragment>
 
     <fragment

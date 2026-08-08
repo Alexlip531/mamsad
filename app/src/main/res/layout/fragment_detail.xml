@@ -106,6 +106,137 @@
                         android:textSize="13sp"
                         tools:text="Частный сад" />
                 </LinearLayout>
+
+                <!-- Rating badge -->
+                <LinearLayout
+                    android:id="@+id/badge_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_card_white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="6dp"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/tv_detail_rating_stars"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/mamsad_sun"
+                        android:textSize="16sp"
+                        tools:text="★★★★★" />
+
+                    <TextView
+                        android:id="@+id/tv_detail_rating_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:textColor="@color/mamsad_ink"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        tools:text="4.6" />
+
+                    <TextView
+                        android:id="@+id/tv_detail_review_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:textColor="@color/mamsad_ink_soft"
+                        android:textSize="12sp"
+                        tools:text="(11 отзывов)" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Info card: address + price -->
+            <LinearLayout
+                android:id="@+id/card_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="-16dp"
+                android:background="@drawable/bg_card_white"
+                android:elevation="3dp"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/detail_address"
+                        android:textColor="@color/mamsad_ink_mute"
+                        android:textSize="11sp"
+                        android:textAllCaps="true" />
+
+                    <TextView
+                        android:id="@+id/tv_detail_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:textColor="@color/mamsad_ink"
+                        android:textSize="14sp"
+                        tools:text="г. Королёв, мкр. Центральный" />
+
+                    <TextView
+                        android:id="@+id/tv_detail_address_empty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/detail_no_address"
+                        android:textColor="@color/mamsad_ink_mute"
+                        android:textSize="14sp"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="12dp"
+                    android:background="@color/mamsad_divider" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/detail_price"
+                        android:textColor="@color/mamsad_ink_mute"
+                        android:textSize="11sp"
+                        android:textAllCaps="true" />
+
+                    <TextView
+                        android:id="@+id/tv_detail_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:textColor="@color/mamsad_coral_dark"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        tools:text="35 000 ₽/мес" />
+
+                    <TextView
+                        android:id="@+id/tv_detail_price_empty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/detail_no_price"
+                        android:textColor="@color/mamsad_ink_mute"
+                        android:textSize="14sp"
+                        android:visibility="gone" />
+                </LinearLayout>
             </LinearLayout>
 
             <!-- Tags section -->
@@ -113,7 +244,7 @@
                 android:id="@+id/section_tags"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="20dp"
                 android:orientation="vertical"
                 android:paddingHorizontal="20dp"
                 android:visibility="gone">
@@ -158,6 +289,63 @@
                     android:textColor="@color/mamsad_ink_soft"
                     android:textSize="15sp"
                     tools:text="Сад с углублённой подготовкой к школе и английским языком." />
+            </LinearLayout>
+
+            <!-- Reviews section -->
+            <LinearLayout
+                android:id="@+id/section_reviews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:orientation="vertical"
+                android:paddingHorizontal="20dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reviews_title"
+                    android:textColor="@color/mamsad_ink"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/reviews_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical" />
+
+                <ProgressBar
+                    android:id="@+id/reviews_progress"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="12dp"
+                    android:visibility="gone"
+                    android:indeterminateTint="@color/mamsad_coral" />
+
+                <TextView
+                    android:id="@+id/reviews_empty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:text="@string/reviews_empty"
+                    android:textColor="@color/mamsad_ink_mute"
+                    android:textSize="13sp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/reviews_error"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:text="@string/reviews_error"
+                    android:textColor="@color/mamsad_ink_mute"
+                    android:textSize="13sp"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <!-- Source link card -->
