@@ -66,7 +66,7 @@ class MamsadRepository(
         val overrideMap = overrides.orgs.associateBy { it.id }
 
         // 3b. Fetch LOCAL admin overrides (this device's admin edits — top priority)
-        val localOverrides = adminDao.getAll().associateBy { it.id }
+        val localOverrides = adminDao.getAll().associateBy { it.orgId }
 
         // 4. Merge into entities
         val entities = wpOrgs.map { wp ->

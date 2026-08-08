@@ -10,6 +10,7 @@ import com.zai.mamsad.data.OrgEntity
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -34,6 +35,7 @@ class AdminViewModel(
     /** Local overrides — keyed by orgId for quick badge lookup. */
     val overrides: StateFlow<Map<Int, AdminOverride>> =
         repo.observeAdminOverrides()
+            .map { list -> list.associateBy { it.orgId } }
             .stateIn(
                 viewModelScope, SharingStarted.Eagerly, emptyMap()
             )
