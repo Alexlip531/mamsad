@@ -160,6 +160,5 @@
     <string name="detail_no_address">Адрес не указан</string>
     <string name="detail_no_price">Цена не указана</string>
     <string name="detail_no_rating">Нет оценок</string>
-    <string name="detail_btn_route">Маршрут</string>
     <string name="detail_phone">Телефон</string>
 </resources>
