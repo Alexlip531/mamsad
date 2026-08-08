@@ -107,7 +107,7 @@ class HomeFragment : Fragment() {
             // City cards list — show count per city from current cached orgs
             val orgs = viewModel.filteredOrgs.value
             val withCounts = cities.map { term ->
-                CityAdapter.CityWithCount(term, orgs.count { it.cityId == term.id })
+                CityWithCount(term, orgs.count { it.cityId == term.id })
             }.sortedByDescending { it.count }
             cityAdapter.submitList(withCounts)
         }

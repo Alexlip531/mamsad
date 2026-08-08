@@ -145,9 +145,11 @@ class CatalogViewModel(
     fun getById(id: Int) = repo.observeById(id)
 
     companion object {
-        val Factory = ViewModelProvider.Factory { modelClass ->
+        val Factory = object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
-            CatalogViewModel(MamsadApp.instance.repository) as CatalogViewModel
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                return CatalogViewModel(MamsadApp.instance.repository) as T
+            }
         }
     }
 }

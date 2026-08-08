@@ -5,14 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.zai.mamsad.R
 import com.zai.mamsad.api.WpTerm
 import com.zai.mamsad.databinding.ItemCityCardBinding
+
+data class CityWithCount(val term: WpTerm, val count: Int)
 
 class CityAdapter(
     private val onClick: (WpTerm) -> Unit
 ) : ListAdapter<CityWithCount, CityAdapter.VH>(DIFF) {
-
-    data class CityWithCount(val term: WpTerm, val count: Int)
 
     inner class VH(val binding: ItemCityCardBinding) :
         RecyclerView.ViewHolder(binding.root)

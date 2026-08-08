@@ -112,7 +112,11 @@ class CatalogFragment : Fragment() {
             viewModel.types,
             viewModel.categories
         ) { f, cities, types, categories -> Quad(f, cities, types, categories) }
-            .collect { (f, cities, types, categories) ->
+            .collect { quad ->
+                val f = quad.f
+                val cities = quad.cities
+                val types = quad.types
+                val categories = quad.categories
                 binding.chipsActive.removeAllViews()
                 if (f.isActive) {
                     binding.scrollActiveFilters.visibility = View.VISIBLE
@@ -146,12 +150,7 @@ class CatalogFragment : Fragment() {
         val cities: List<WpTerm>,
         val types: List<WpTerm>,
         val categories: List<WpTerm>
-    ) {
-        operator fun component1() = f
-        operator fun component2() = cities
-        operator fun component3() = types
-        operator fun component4() = categories
-    }
+    )
 
     private fun addRemovableChip(label: String, onRemove: () -> Unit) {
         val chip = Chip(requireContext())
