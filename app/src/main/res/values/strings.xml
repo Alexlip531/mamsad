@@ -203,4 +203,39 @@
     <string name="admin_field_lng">Долгота</string>
     <string name="admin_field_rating">Рейтинг (0–5)</string>
     <string name="admin_empty">Нет садиков в кэше. Обновите каталог на главной.</string>
+
+    <!-- Articles -->
+    <string name="articles_title">Статьи для мам</string>
+    <string name="articles_empty">Статей пока нет.</string>
+    <string name="article_detail_title">Статья</string>
+
+    <!-- Specialists -->
+    <string name="specialists_title">Специалисты</string>
+    <string name="specialists_intro_title">Поможем найти своего специалиста</string>
+    <string name="specialists_intro_text">В каталоге mamsad.ru — проверенные няни, логопеды, психологи, репетиторы и детские врачи Королёва и Мытищ. Выбирайте категорию, чтобы увидеть анкеты.</string>
+    <string name="specialists_how_title">Как это работает</string>
+    <string name="specialists_how_text">1. Выберите категорию специалиста.\n2. Откроется каталог с подходящими анкетами.\n3. Сохраняйте понравившихся в избранное и сравнивайте.\n4. Связывайтесь напрямую через mamsad.ru.</string>
+
+    <!-- Compare -->
+    <string name="compare_title">Сравнение садов</string>
+    <string name="compare_empty">Выберите садики для сравнения.\n\nОткройте карточку садика и нажмите «К сравнению».</string>
+    <string name="compare_btn_go_catalog">Открыть каталог</string>
+    <string name="compare_btn_open">Открыть</string>
+    <string name="compare_btn_remove">Убрать</string>
+    <string name="compare_count_zero">Пока ничего не выбрано</string>
+    <string name="compare_added">Добавлено к сравнению (всего %1$d)</string>
+    <string name="compare_removed">Убрано из сравнения</string>
+    <string name="compare_row_price">Цена</string>
+    <string name="compare_row_rating">Рейтинг</string>
+    <string name="compare_row_address">Адрес</string>
+    <string name="compare_row_categories">Категории</string>
+    <string name="compare_row_reviews">Отзывов</string>
+    <string name="detail_btn_compare">К сравнению</string>
+    <string name="detail_btn_compare_added">В сравнении ✓</string>
+
+    <!-- Home: tools section -->
+    <string name="home_tools">Инструменты</string>
+    <string name="home_card_articles">Статьи для мам</string>
+    <string name="home_card_specialists">Специалисты</string>
+    <string name="home_card_compare">Сравнение садов</string>
 </resources>

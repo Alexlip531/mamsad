@@ -18,4 +18,10 @@
         <item quantity="many">%d новых садиков в Мамсад</item>
         <item quantity="other">%d новых садиков в Мамсад</item>
     </plurals>
+    <plurals name="compare_count">
+        <item quantity="one">Выбран %d садик</item>
+        <item quantity="few">Выбрано %d садика</item>
+        <item quantity="many">Выбрано %d садиков</item>
+        <item quantity="other">Выбрано %d садиков</item>
+    </plurals>
 </resources>

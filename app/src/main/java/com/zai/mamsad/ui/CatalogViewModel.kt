@@ -8,6 +8,7 @@ import com.zai.mamsad.data.CatalogFilter
 import com.zai.mamsad.data.MamsadRepository
 import com.zai.mamsad.data.OrgEntity
 import com.zai.mamsad.data.SortMode
+import com.zai.mamsad.api.WpPost
 import com.zai.mamsad.api.WpReview
 import com.zai.mamsad.api.WpTerm
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -83,6 +84,29 @@ class CatalogViewModel(
 
     var reviewsOrgId: Int = 0
         private set
+
+    // ============================================================
+    // Articles state — shared by ArticlesFragment
+    // ============================================================
+    private val _articles = MutableStateFlow<List<WpPost>>(emptyList())
+    val articles: StateFlow<List<WpPost>> = _articles.asStateFlow()
+
+    private val _articlesLoading = MutableStateFlow(false)
+    val articlesLoading: StateFlow<Boolean> = _articlesLoading.asStateFlow()
+
+    private val _articlesError = MutableStateFlow<String?>(null)
+    val articlesError: StateFlow<String?> = _articlesError.asStateFlow()
+
+    // ============================================================
+    // Compare state — shared by DetailFragment + CompareFragment
+    // ============================================================
+    private val _compareIds = MutableStateFlow<Set<Int>>(emptySet())
+    val compareIds: StateFlow<Set<Int>> = _compareIds.asStateFlow()
+
+    val compareOrgs: StateFlow<List<OrgEntity>> =
+        combine(allOrgs, _compareIds) { list, ids ->
+            list.filter { it.id in ids }
+        }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
     init {
         refresh()
@@ -173,6 +197,46 @@ class CatalogViewModel(
     }
 
     fun getById(id: Int) = repo.observeById(id)
+
+    // ============================================================
+    // Articles
+    // ============================================================
+    fun loadArticles() {
+        if (_articles.value.isNotEmpty()) return
+        viewModelScope.launch {
+            _articlesLoading.value = true
+            _articlesError.value = null
+            repo.fetchPosts()
+                .onSuccess { _articles.value = it }
+                .onFailure { _articlesError.value = it.message ?: "Ошибка загрузки статей" }
+            _articlesLoading.value = false
+        }
+    }
+
+    // ============================================================
+    // Compare
+    // ============================================================
+    private val maxCompare = 4
+
+    fun toggleCompare(orgId: Int) {
+        val current = _compareIds.value.toMutableSet()
+        if (orgId in current) {
+            current.remove(orgId)
+        } else if (current.size < maxCompare) {
+            current.add(orgId)
+        }
+        _compareIds.value = current
+    }
+
+    fun isInCompare(orgId: Int): Boolean = orgId in _compareIds.value
+
+    fun removeFromCompare(orgId: Int) {
+        _compareIds.value = _compareIds.value - orgId
+    }
+
+    fun clearCompare() {
+        _compareIds.value = emptySet()
+    }
 
     companion object {
         val Factory = object : ViewModelProvider.Factory {

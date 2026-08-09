@@ -68,6 +68,16 @@ class HomeFragment : Fragment() {
         }
         binding.btnRetryHome.setOnClickListener { viewModel.refresh() }
 
+        // Tools cards
+        binding.cardArticles.setOnClickListener {
+            findNavController().navigate(R.id.action_home_to_articles)
+        }
+        binding.cardSpecialists.setOnClickListener {
+            findNavController().navigate(R.id.action_home_to_specialists)
+        }
+        binding.cardCompare.setOnClickListener { openCompare() }
+        binding.btnCompareGo.setOnClickListener { openCompare() }
+
         // Swipe to refresh
         binding.swipeRefresh.setOnRefreshListener { viewModel.refresh() }
         binding.swipeRefresh.setColorSchemeResources(R.color.mamsad_coral, R.color.mamsad_sage)
@@ -79,6 +89,22 @@ class HomeFragment : Fragment() {
                 launch { observeCities() }
                 launch { observeRefreshing() }
                 launch { observeError() }
+                launch { observeCompare() }
+            }
+        }
+    }
+
+    private fun openCompare() {
+        findNavController().navigate(R.id.action_home_to_compare)
+    }
+
+    private suspend fun observeCompare() {
+        viewModel.compareIds.collect { ids ->
+            val count = ids.size
+            binding.tvCompareCount.text = if (count == 0) {
+                getString(R.string.compare_count_zero)
+            } else {
+                resources.getQuantityString(R.plurals.compare_count, count, count)
             }
         }
     }

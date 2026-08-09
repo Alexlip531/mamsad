@@ -43,6 +43,15 @@ interface MamsadApi {
         @Query("search") search: String? = null
     ): List<WpReview>
 
+    /** Articles (posts) — used for the «Статьи для мам» screen. */
+    @GET("wp/v2/posts")
+    suspend fun getPosts(
+        @Query("per_page") perPage: Int = 20,
+        @Query("page") page: Int = 1,
+        @Query("_embed") embed: Boolean = true,
+        @Query("search") search: String? = null
+    ): List<WpPost>
+
     /**
      * Raw HTML of an org page (used to scrape JSON-LD: geo, address, price, rating).
      * Retrofit returns the response body as a String.
@@ -60,6 +69,24 @@ interface MamsadApi {
 
 @JsonClass(generateAdapter = true)
 data class WpReview(
+    val id: Int,
+    val date: String,
+    val slug: String,
+    val link: String,
+    val title: RenderedText,
+    val content: RenderedText,
+    val excerpt: RenderedText,
+    @Json(name = "_embedded") val embedded: WpEmbedded? = null
+)
+
+/**
+ * Article (post) DTO from mamsad.ru WP REST API.
+ * Endpoint: /wp-json/wp/v2/posts
+ *
+ * Used for the «Статьи для мам» screen.
+ */
+@JsonClass(generateAdapter = true)
+data class WpPost(
     val id: Int,
     val date: String,
     val slug: String,

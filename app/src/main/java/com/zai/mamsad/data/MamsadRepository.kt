@@ -7,6 +7,7 @@ import com.zai.mamsad.api.NetworkClient
 import com.zai.mamsad.api.OrgGeoInfo
 import com.zai.mamsad.api.OverridesFile
 import com.zai.mamsad.api.WpOrg
+import com.zai.mamsad.api.WpPost
 import com.zai.mamsad.api.WpReview
 import com.zai.mamsad.api.WpTerm
 import kotlinx.coroutines.Dispatchers
@@ -98,6 +99,10 @@ class MamsadRepository(
 
     suspend fun fetchReviews(): Result<List<WpReview>> = runCatching {
         api.getReviews(perPage = 100, embed = false)
+    }
+
+    suspend fun fetchPosts(): Result<List<WpPost>> = runCatching {
+        api.getPosts(perPage = 20, embed = true)
     }
 
     suspend fun setFavorite(id: Int, fav: Boolean) {

@@ -65,11 +65,30 @@ class DetailFragment : Fragment() {
 
         binding.btnShare.setOnClickListener { shareCurrent() }
 
+        binding.btnCompare.setOnClickListener {
+            viewModel.toggleCompare(orgId)
+            val added = viewModel.isInCompare(orgId)
+            val msg = if (added) getString(R.string.compare_added, viewModel.compareIds.value.size)
+            else getString(R.string.compare_removed)
+            android.widget.Toast.makeText(requireContext(), msg, android.widget.Toast.LENGTH_SHORT).show()
+        }
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch { observeOrg() }
                 launch { observeReviews() }
+                launch { observeCompareState() }
             }
+        }
+    }
+
+    private suspend fun observeCompareState() {
+        viewModel.compareIds.collect { ids ->
+            val isIn = orgId in ids
+            binding.btnCompare.text = getString(
+                if (isIn) R.string.detail_btn_compare_added
+                else R.string.detail_btn_compare
+            )
         }
     }
 
