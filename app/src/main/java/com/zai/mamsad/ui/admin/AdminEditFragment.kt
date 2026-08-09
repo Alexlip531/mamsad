@@ -26,7 +26,7 @@ class AdminEditFragment : Fragment() {
     private var _binding: FragmentAdminEditBinding? = null
     private val binding get() = _binding!!
 
-    private val vm: AdminViewModel by activityViewModels()
+    private val vm: AdminViewModel by activityViewModels { AdminViewModel.Factory }
     private val args: AdminEditFragmentArgs by navArgs()
 
     override fun onCreateView(

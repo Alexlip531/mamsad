@@ -32,7 +32,7 @@ class AdminFragment : Fragment() {
     private var _binding: FragmentAdminBinding? = null
     private val binding get() = _binding!!
 
-    private val vm: AdminViewModel by activityViewModels()
+    private val vm: AdminViewModel by activityViewModels { AdminViewModel.Factory }
 
     private lateinit var adapter: AdminAdapter
 
