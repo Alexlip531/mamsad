@@ -243,6 +243,9 @@ class MamsadRepository(
             priceFrom = override?.priceOverride ?: geo?.priceFrom ?: "",
             rating = override?.ratingOverride ?: geo?.rating,
             reviewCount = geo?.reviewCount ?: 0,
+            ageGroups = geo?.ageGroups ?: "",
+            phone = geo?.phone,
+            galleryUrls = geo?.galleryUrls.joinToString(",") ?: "",
             featured = override?.featured ?: false,
             hidden = override?.hidden ?: false
         )

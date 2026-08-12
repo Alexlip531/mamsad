@@ -228,6 +228,7 @@
     <string name="compare_row_price">Цена</string>
     <string name="compare_row_rating">Рейтинг</string>
     <string name="compare_row_address">Адрес</string>
+    <string name="compare_row_age">Возраст</string>
     <string name="compare_row_categories">Категории</string>
     <string name="compare_row_reviews">Отзывов</string>
     <string name="detail_btn_compare">К сравнению</string>
@@ -256,4 +257,10 @@
     <string name="filters_sort_rating">По рейтингу</string>
     <string name="detail_btn_show_on_map">На карте</string>
     <string name="detail_route_no_coords">У этого садика пока нет координат — маршрут построить нельзя.</string>
+
+    <!-- v1.5.0: photo gallery + age groups + call button -->
+    <string name="detail_section_gallery">Фото</string>
+    <string name="detail_section_age">Возраст</string>
+    <string name="detail_no_photos">У этого садика пока нет фото</string>
+    <string name="detail_no_age">Возраст не указан</string>
 </resources>

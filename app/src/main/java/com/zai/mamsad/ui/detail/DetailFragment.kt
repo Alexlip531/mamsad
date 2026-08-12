@@ -18,6 +18,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.chip.Chip
 import com.zai.mamsad.R
 import com.zai.mamsad.api.WpReview
@@ -44,8 +45,16 @@ class DetailFragment : Fragment() {
     private var currentLat: Double? = null
     private var currentLng: Double? = null
     private var currentTitle: String = ""
+    private var currentPhone: String? = null
 
     private val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale("ru"))
+
+    // Photo gallery adapter — thumbnails in a horizontal strip on the detail
+    // screen. Tapping any thumb opens the fullscreen PhotoViewerDialogFragment.
+    private val galleryAdapter = PhotoGalleryAdapter { index, all ->
+        PhotoViewerDialogFragment.newInstance(all, index)
+            .show(parentFragmentManager, "photo_viewer")
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -75,6 +84,28 @@ class DetailFragment : Fragment() {
         }
 
         binding.btnShare.setOnClickListener { shareCurrent() }
+
+        // Photo gallery — horizontal RecyclerView
+        binding.rvGallery.apply {
+            layoutManager = LinearLayoutManager(
+                requireContext(), LinearLayoutManager.HORIZONTAL, false
+            )
+            adapter = galleryAdapter
+            setHasFixedSize(false)
+        }
+
+        // Call button — opens the system dialer with the org's tel: URI.
+        // Visible only when the org has a phone number on its mamsad.ru page.
+        binding.btnCall.setOnClickListener {
+            val phone = currentPhone ?: return@setOnClickListener
+            val dialIntent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phone"))
+            if (dialIntent.resolveActivity(requireActivity().packageManager) != null) {
+                startActivity(dialIntent)
+            } else {
+                // Fallback: no dialer app (e.g. tablet) — open tel: in a chooser
+                startActivity(Intent.createChooser(dialIntent, getString(R.string.detail_btn_call)))
+            }
+        }
 
         binding.btnCompare.setOnClickListener {
             viewModel.toggleCompare(orgId)
@@ -183,10 +214,11 @@ class DetailFragment : Fragment() {
     private suspend fun observeOrg() {
         viewModel.getById(orgId).collect { org ->
             if (org == null) return@collect
-            // Cache fields used by the route + show-on-map buttons
+            // Cache fields used by the route + show-on-map + call buttons
             currentLat = org.lat
             currentLng = org.lng
             currentTitle = org.title
+            currentPhone = org.phone
 
             binding.toolbar.title = org.title
             binding.tvDetailTitle.text = org.title
@@ -224,6 +256,19 @@ class DetailFragment : Fragment() {
                 binding.tvDetailPriceEmpty.isVisible = true
             }
 
+            // Age groups
+            if (org.ageGroups.isNotBlank()) {
+                binding.tvDetailAge.text = org.ageGroups
+                binding.tvDetailAge.isVisible = true
+                binding.tvDetailAgeEmpty.isVisible = false
+            } else {
+                binding.tvDetailAge.isVisible = false
+                binding.tvDetailAgeEmpty.isVisible = true
+            }
+
+            // Call button — only show if a phone number was scraped
+            binding.btnCall.isVisible = !org.phone.isNullOrBlank()
+
             // Rating
             if (org.rating != null && org.rating > 0) {
                 binding.badgeRating.isVisible = true
@@ -236,6 +281,24 @@ class DetailFragment : Fragment() {
                 binding.tvDetailReviewCount.text = countText
             } else {
                 binding.badgeRating.isVisible = false
+            }
+
+            // Photo gallery — combine featured image + scraped gallery URLs
+            val galleryUrls = buildList {
+                org.imageUrl?.takeIf { it.isNotBlank() }?.let { add(it) }
+                org.galleryUrls.split(",")
+                    .map { it.trim() }
+                    .filter { it.isNotBlank() && it !in this }
+                    .forEach { add(it) }
+            }
+            if (galleryUrls.isNotEmpty()) {
+                binding.sectionGallery.isVisible = true
+                binding.tvGalleryEmpty.isVisible = false
+                galleryAdapter.submitList(galleryUrls)
+            } else {
+                binding.sectionGallery.isVisible = false
+                binding.tvGalleryEmpty.isVisible = false
+                galleryAdapter.submitList(emptyList())
             }
 
             // Tags

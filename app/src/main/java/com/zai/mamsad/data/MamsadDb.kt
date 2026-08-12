@@ -7,7 +7,7 @@ import android.content.Context
 
 @Database(
     entities = [OrgEntity::class, AdminOverride::class, Vote::class, RecentView::class],
-    version = 4,
+    version = 5,
     exportSchema = false
 )
 abstract class MamsadDb : RoomDatabase() {

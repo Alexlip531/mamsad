@@ -32,6 +32,13 @@ data class OrgEntity(
     val priceFrom: String = "",      // e.g. "35000" RUB/month
     val rating: Float? = null,        // 0..5
     val reviewCount: Int = 0,
+    // Age range (e.g. "1,5–7 лет") scraped from kg-org-info HTML block.
+    val ageGroups: String = "",
+    // Phone, if a tel: link is present on the org page; null otherwise.
+    val phone: String? = null,
+    // Comma-separated list of photo URLs scraped from the org page (img src/srcset
+    // pointing to wp-content/uploads/). Empty when the page has no photos.
+    val galleryUrls: String = "",
     // Admin overrides
     val featured: Boolean = false,
     val hidden: Boolean = false,

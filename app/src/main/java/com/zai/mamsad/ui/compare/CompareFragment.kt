@@ -119,6 +119,9 @@ class CompareFragment : Fragment() {
         addRow(container, cols, getString(R.string.compare_row_address), orgs) {
             it.address.ifBlank { "—" }
         }
+        addRow(container, cols, getString(R.string.compare_row_age), orgs) {
+            it.ageGroups.ifBlank { "—" }
+        }
         addRow(container, cols, getString(R.string.compare_row_categories), orgs) {
             it.categoryNames.ifBlank { "—" }
         }

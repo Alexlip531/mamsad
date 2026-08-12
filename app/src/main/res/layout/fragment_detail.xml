@@ -151,7 +151,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Info card: address + price -->
+            <!-- Info card: address + price + age -->
             <LinearLayout
                 android:id="@+id/card_info"
                 android:layout_width="match_parent"
@@ -200,7 +200,7 @@
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:layout_marginHorizontal="12dp"
+                    android:layout_marginHorizontal="8dp"
                     android:background="@color/mamsad_divider" />
 
                 <LinearLayout
@@ -237,6 +237,87 @@
                         android:textSize="14sp"
                         android:visibility="gone" />
                 </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="8dp"
+                    android:background="@color/mamsad_divider" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/detail_section_age"
+                        android:textColor="@color/mamsad_ink_mute"
+                        android:textSize="11sp"
+                        android:textAllCaps="true" />
+
+                    <TextView
+                        android:id="@+id/tv_detail_age"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:textColor="@color/mamsad_sage_dark"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        tools:text="1,5–7 лет" />
+
+                    <TextView
+                        android:id="@+id/tv_detail_age_empty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/detail_no_age"
+                        android:textColor="@color/mamsad_ink_mute"
+                        android:textSize="14sp"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Photo gallery section: horizontal scroll of org's photos -->
+            <LinearLayout
+                android:id="@+id/section_gallery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                android:paddingHorizontal="20dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/detail_section_gallery"
+                    android:textColor="@color/mamsad_ink"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_gallery"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    android:overScrollMode="never"
+                    android:scrollbars="none" />
+
+                <TextView
+                    android:id="@+id/tv_gallery_empty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="@string/detail_no_photos"
+                    android:textColor="@color/mamsad_ink_mute"
+                    android:textSize="13sp"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <!-- Tags section -->
@@ -264,8 +345,9 @@
                     android:layout_marginTop="6dp" />
             </LinearLayout>
 
-            <!-- Action buttons: Show on map + Build route -->
+            <!-- Action buttons: Call (conditional) + Show on map + Build route -->
             <LinearLayout
+                android:id="@+id/row_actions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
@@ -273,11 +355,24 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_call"
+                    style="@style/Widget.Mamsad.Button.Primary"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:icon="@drawable/ic_phone"
+                    app:iconTint="@color/mamsad_white"
+                    android:text="@string/detail_btn_call"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_show_on_map"
                     style="@style/Widget.Mamsad.Button.Secondary"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_marginStart="8dp"
                     app:icon="@drawable/ic_nav_map"
                     app:iconTint="@color/mamsad_coral"
                     android:text="@string/detail_btn_show_on_map" />
