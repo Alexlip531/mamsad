@@ -255,6 +255,5 @@
     <string name="home_recent_empty">Вы ещё не открывали карточки садов.\nЗагляните в каталог!</string>
     <string name="filters_sort_rating">По рейтингу</string>
     <string name="detail_btn_show_on_map">На карте</string>
-    <string name="detail_btn_route">Маршрут</string>
     <string name="detail_route_no_coords">У этого садика пока нет координат — маршрут построить нельзя.</string>
 </resources>
