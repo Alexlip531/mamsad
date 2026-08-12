@@ -8,6 +8,7 @@ import com.zai.mamsad.data.CatalogFilter
 import com.zai.mamsad.data.MamsadRepository
 import com.zai.mamsad.data.OrgEntity
 import com.zai.mamsad.data.SortMode
+import com.zai.mamsad.data.Vote
 import com.zai.mamsad.api.WpPost
 import com.zai.mamsad.api.WpReview
 import com.zai.mamsad.api.WpTerm
@@ -16,6 +17,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -237,6 +239,39 @@ class CatalogViewModel(
     fun clearCompare() {
         _compareIds.value = emptySet()
     }
+
+    // ============================================================
+    // Votes (local, per-device)
+    // ============================================================
+    val votes: StateFlow<Map<Int, Vote>> = repo.observeAllVotes()
+        .map { list -> list.associateBy { it.orgId } }
+        .stateIn(
+            viewModelScope,
+            SharingStarted.Eagerly,
+            emptyMap()
+        )
+
+    /**
+     * Cast or update a vote for a kindergarten. Replaces any existing vote
+     * for this org by this device.
+     */
+    fun vote(orgId: Int, rating: Int) {
+        require(rating in 1..5) { "rating must be 1..5, got $rating" }
+        viewModelScope.launch {
+            repo.saveVote(orgId, rating)
+        }
+    }
+
+    /**
+     * Remove the user's vote for an org.
+     */
+    fun removeVote(orgId: Int) {
+        viewModelScope.launch {
+            repo.deleteVote(orgId)
+        }
+    }
+
+    fun getVote(orgId: Int): Vote? = votes.value[orgId]
 
     companion object {
         val Factory = object : ViewModelProvider.Factory {

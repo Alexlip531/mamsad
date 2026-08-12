@@ -407,6 +407,123 @@
                         android:minWidth="0dp" />
                 </LinearLayout>
             </LinearLayout>
+
+            <!-- Vote section: user can rate this kindergarten -->
+            <LinearLayout
+                android:id="@+id/section_vote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_card_white"
+                android:elevation="2dp"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/vote_title"
+                    android:textColor="@color/mamsad_ink"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_vote_hint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/vote_hint"
+                    android:textColor="@color/mamsad_ink_mute"
+                    android:textSize="12sp" />
+
+                <!-- Star picker row -->
+                <LinearLayout
+                    android:id="@+id/row_vote_stars"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:id="@+id/stars_container"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <!-- 5 star ImageViews, programmatically clickable -->
+                        <ImageView
+                            android:id="@+id/star_1"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:padding="2dp"
+                            android:contentDescription="@string/vote_star_n"
+                            android:src="@drawable/ic_star_outline"
+                            app:tint="@color/mamsad_sun" />
+
+                        <ImageView
+                            android:id="@+id/star_2"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:padding="2dp"
+                            android:contentDescription="@string/vote_star_n"
+                            android:src="@drawable/ic_star_outline"
+                            app:tint="@color/mamsad_sun" />
+
+                        <ImageView
+                            android:id="@+id/star_3"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:padding="2dp"
+                            android:contentDescription="@string/vote_star_n"
+                            android:src="@drawable/ic_star_outline"
+                            app:tint="@color/mamsad_sun" />
+
+                        <ImageView
+                            android:id="@+id/star_4"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:padding="2dp"
+                            android:contentDescription="@string/vote_star_n"
+                            android:src="@drawable/ic_star_outline"
+                            app:tint="@color/mamsad_sun" />
+
+                        <ImageView
+                            android:id="@+id/star_5"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:padding="2dp"
+                            android:contentDescription="@string/vote_star_n"
+                            android:src="@drawable/ic_star_outline"
+                            app:tint="@color/mamsad_sun" />
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_vote_remove"
+                        style="@style/Widget.Material3.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:minWidth="0dp"
+                        android:padding="0dp"
+                        android:text="@string/vote_remove"
+                        android:textColor="@color/mamsad_ink_mute"
+                        android:textSize="12sp"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <!-- Result line: shows your vote + total votes -->
+                <TextView
+                    android:id="@+id/tv_vote_result"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/mamsad_ink_soft"
+                    android:textSize="13sp"
+                    tools:text="Ваш голос: 5 звёзд · Всего голосов: 4" />
+            </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

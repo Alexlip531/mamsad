@@ -15,7 +15,8 @@ class MamsadApp : Application() {
     val repository by lazy {
         MamsadRepository(
             dao = database.orgDao(),
-            adminDao = database.adminDao()
+            adminDao = database.adminDao(),
+            voteDao = database.voteDao()
         )
     }
 

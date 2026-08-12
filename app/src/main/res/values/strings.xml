@@ -238,4 +238,15 @@
     <string name="home_card_articles">Статьи для мам</string>
     <string name="home_card_specialists">Специалисты</string>
     <string name="home_card_compare">Сравнение садов</string>
+
+    <!-- Vote (local rating per-device) -->
+    <string name="vote_title">Оцените этот сад</string>
+    <string name="vote_hint">Нажмите на звезду — ваш голос сохранится на этом устройстве.</string>
+    <string name="vote_star_n">Звезда</string>
+    <string name="vote_remove">Убрать голос</string>
+    <string name="vote_thank_you">Спасибо! Ваш голос: %1$d из 5 ★</string>
+    <string name="vote_removed">Ваш голос убран</string>
+    <string name="vote_result_voted">Ваш голос: %1$d звёзд · Всего голосов: %2$d</string>
+    <string name="vote_result_not_voted">Всего голосов: %1$d — станьте первым!</string>
+    <string name="vote_result_empty">Пока нет голосов. Оцените сад первым!</string>
 </resources>

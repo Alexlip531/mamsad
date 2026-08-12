@@ -9,6 +9,8 @@ import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -19,6 +21,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
 import com.zai.mamsad.R
 import com.zai.mamsad.api.WpReview
+import com.zai.mamsad.data.Vote
 import com.zai.mamsad.databinding.FragmentDetailBinding
 import com.zai.mamsad.databinding.ItemReviewBinding
 import com.zai.mamsad.ui.CatalogViewModel
@@ -73,11 +76,36 @@ class DetailFragment : Fragment() {
             android.widget.Toast.makeText(requireContext(), msg, android.widget.Toast.LENGTH_SHORT).show()
         }
 
+        // Vote: tap any of 5 stars to cast a 1..5 rating; long-press to remove.
+        val starViews = listOf(
+            binding.star1, binding.star2, binding.star3, binding.star4, binding.star5
+        )
+        starViews.forEachIndexed { idx, v ->
+            v.setOnClickListener {
+                val rating = idx + 1
+                viewModel.vote(orgId, rating)
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.vote_thank_you, rating),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+        binding.btnVoteRemove.setOnClickListener {
+            viewModel.removeVote(orgId)
+            Toast.makeText(
+                requireContext(),
+                R.string.vote_removed,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch { observeOrg() }
                 launch { observeReviews() }
                 launch { observeCompareState() }
+                launch { observeVote(starViews) }
             }
         }
     }
@@ -89,6 +117,35 @@ class DetailFragment : Fragment() {
                 if (isIn) R.string.detail_btn_compare_added
                 else R.string.detail_btn_compare
             )
+        }
+    }
+
+    /**
+     * Observe the user's vote for this org and reflect it in the UI:
+     *   - fill stars 1..rating with ic_star_filled, leave others outlined
+     *   - show "remove my vote" button only when a vote exists
+     *   - show a result line "Ваш голос: N звёзд · Всего голосов: M"
+     *     where M is the total number of votes across all orgs on this device.
+     */
+    private suspend fun observeVote(starViews: List<ImageView>) {
+        viewModel.votes.collect { voteMap ->
+            val vote: Vote? = voteMap[orgId]
+            val userRating = vote?.rating ?: 0
+            starViews.forEachIndexed { idx, v ->
+                v.setImageResource(
+                    if (idx < userRating) R.drawable.ic_star_filled
+                    else R.drawable.ic_star_outline
+                )
+            }
+            binding.btnVoteRemove.isVisible = vote != null
+            binding.tvVoteResult.text = if (vote != null) {
+                val total = voteMap.size
+                getString(R.string.vote_result_voted, userRating, total)
+            } else {
+                val total = voteMap.size
+                if (total > 0) getString(R.string.vote_result_not_voted, total)
+                else getString(R.string.vote_result_empty)
+            }
         }
     }
 

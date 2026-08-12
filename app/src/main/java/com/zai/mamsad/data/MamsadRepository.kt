@@ -33,6 +33,7 @@ class MamsadRepository(
     private val api: MamsadApi = NetworkClient.api,
     private val dao: OrgDao,
     private val adminDao: AdminDao,
+    private val voteDao: VoteDao,
     private val overridesUrl: String = DEFAULT_OVERRIDES_URL
 ) {
 
@@ -41,6 +42,34 @@ class MamsadRepository(
     fun observeById(id: Int): Flow<OrgEntity?> = dao.observeById(id)
 
     fun observeAdminOverrides(): Flow<List<AdminOverride>> = adminDao.observeAll()
+
+    // ============================================================
+    // Votes (local, per-device)
+    // ============================================================
+    fun observeVote(orgId: Int): Flow<Vote?> = voteDao.observeByOrg(orgId)
+    fun observeAllVotes(): Flow<List<Vote>> = voteDao.observeAll()
+
+    suspend fun saveVote(orgId: Int, rating: Int) {
+        require(rating in 1..5) { "rating must be 1..5, got $rating" }
+        voteDao.upsert(Vote(orgId = orgId, rating = rating))
+    }
+
+    suspend fun deleteVote(orgId: Int) {
+        voteDao.delete(orgId)
+    }
+
+    suspend fun getVote(orgId: Int): Vote? = voteDao.getByOrg(orgId)
+
+    /**
+     * Aggregated local vote stats — used by the detail screen to show
+     * "На основе N голосов наших пользователей".
+     */
+    suspend fun voteStats(): VoteStats {
+        val all = voteDao.observeAll().firstSafe()
+        val n = all.size
+        val avg = if (n == 0) 0f else all.map { it.rating }.average().toFloat()
+        return VoteStats(count = n, average = avg)
+    }
 
     suspend fun fetchOrgs(): Result<List<OrgEntity>> = runCatching {
         // 1. Fetch all orgs with embedded terms
@@ -309,3 +338,11 @@ class MamsadRepository(
             "https://raw.githubusercontent.com/Alexlip531/mamsad/main/admin/overrides.json"
     }
 }
+
+/**
+ * Aggregated local vote stats for the whole catalog.
+ */
+data class VoteStats(
+    val count: Int,
+    val average: Float
+)
