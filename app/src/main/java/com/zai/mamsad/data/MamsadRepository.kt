@@ -245,7 +245,7 @@ class MamsadRepository(
             reviewCount = geo?.reviewCount ?: 0,
             ageGroups = geo?.ageGroups ?: "",
             phone = geo?.phone,
-            galleryUrls = geo?.galleryUrls.joinToString(",") ?: "",
+            galleryUrls = geo?.galleryUrls?.joinToString(",") ?: "",
             featured = override?.featured ?: false,
             hidden = override?.hidden ?: false
         )
