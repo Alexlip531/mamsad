@@ -7,6 +7,7 @@ import com.zai.mamsad.MamsadApp
 import com.zai.mamsad.data.CatalogFilter
 import com.zai.mamsad.data.MamsadRepository
 import com.zai.mamsad.data.OrgEntity
+import com.zai.mamsad.data.RecentView
 import com.zai.mamsad.data.SortMode
 import com.zai.mamsad.data.Vote
 import com.zai.mamsad.api.WpPost
@@ -272,6 +273,30 @@ class CatalogViewModel(
     }
 
     fun getVote(orgId: Int): Vote? = votes.value[orgId]
+
+    // ============================================================
+    // Recently viewed (local, per-device)
+    // ============================================================
+    /**
+     * Top 5 recently-viewed orgs. Combines recent_views table with the
+     * cached orgs to produce a List<OrgEntity> ordered by viewedAt DESC.
+     */
+    val recentOrgs: StateFlow<List<OrgEntity>> =
+        combine(allOrgs, repo.observeRecentIds(10)) { orgs, recents ->
+            val byId = orgs.associateBy { it.id }
+            recents.mapNotNull { byId[it.orgId] }
+        }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+
+    /**
+     * Mark an org as just viewed. Call from DetailFragment.onViewCreated.
+     */
+    fun markViewed(orgId: Int) {
+        viewModelScope.launch { repo.markViewed(orgId) }
+    }
+
+    fun clearRecent() {
+        viewModelScope.launch { repo.clearRecent() }
+    }
 
     companion object {
         val Factory = object : ViewModelProvider.Factory {

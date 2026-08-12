@@ -264,6 +264,36 @@
                     android:layout_marginTop="6dp" />
             </LinearLayout>
 
+            <!-- Action buttons: Show on map + Build route -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_show_on_map"
+                    style="@style/Widget.Mamsad.Button.Secondary"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:icon="@drawable/ic_nav_map"
+                    app:iconTint="@color/mamsad_coral"
+                    android:text="@string/detail_btn_show_on_map" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_route"
+                    style="@style/Widget.Mamsad.Button.Primary"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    app:icon="@drawable/ic_route"
+                    app:iconTint="@color/mamsad_white"
+                    android:text="@string/detail_btn_route" />
+            </LinearLayout>
+
             <!-- Description -->
             <LinearLayout
                 android:layout_width="match_parent"

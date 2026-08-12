@@ -40,6 +40,11 @@ class DetailFragment : Fragment() {
         arguments?.getInt("orgId") ?: 0
     }
 
+    // Latest org observed — used by route + show-on-map buttons
+    private var currentLat: Double? = null
+    private var currentLng: Double? = null
+    private var currentTitle: String = ""
+
     private val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale("ru"))
 
     override fun onCreateView(
@@ -52,6 +57,9 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Record this view in the recently-viewed history
+        viewModel.markViewed(orgId)
 
         binding.toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
 
@@ -98,6 +106,29 @@ class DetailFragment : Fragment() {
                 R.string.vote_removed,
                 Toast.LENGTH_SHORT
             ).show()
+        }
+
+        // Show on map — navigates to MapFragment, which will zoom into this org
+        // (we pass the orgId as argument; MapFragment reads it).
+        binding.btnShowOnMap.setOnClickListener {
+            val args = Bundle().apply { putInt("focusOrgId", orgId) }
+            findNavController().navigate(R.id.action_detail_to_map, args)
+        }
+
+        // Build route — open Yandex Maps routing deep link with coords.
+        // Falls back to Google Maps geo: URI if Yandex Maps isn't installed.
+        binding.btnRoute.setOnClickListener {
+            val lat = currentLat
+            val lng = currentLng
+            if (lat == null || lng == null) {
+                Toast.makeText(
+                    requireContext(),
+                    R.string.detail_route_no_coords,
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+            openRoute(lat, lng, currentTitle)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -152,6 +183,11 @@ class DetailFragment : Fragment() {
     private suspend fun observeOrg() {
         viewModel.getById(orgId).collect { org ->
             if (org == null) return@collect
+            // Cache fields used by the route + show-on-map buttons
+            currentLat = org.lat
+            currentLng = org.lng
+            currentTitle = org.title
+
             binding.toolbar.title = org.title
             binding.tvDetailTitle.text = org.title
             binding.tvDetailCity.text = org.cityName
@@ -302,6 +338,34 @@ class DetailFragment : Fragment() {
             .replace("&#39;", "'")
             .replace("&#038;", "&")
             .trim()
+
+    /**
+     * Open Yandex Maps routing deep link with the org's coords.
+     * Yandex Navigator / Yandex Maps both respond to yandexnavi://buildRouteOnMap.
+     * If no Yandex app is installed, falls back to Google Maps geo: URI which
+     * any Android device has.
+     */
+    private fun openRoute(lat: Double, lng: Double, title: String) {
+        val yandexUri = Uri.parse("yandexnavi://buildRouteOnMap?lat_to=$lat&lon_to=$lng")
+        val yandexIntent = Intent(Intent.ACTION_VIEW, yandexUri).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        if (yandexIntent.resolveActivity(requireActivity().packageManager) != null) {
+            startActivity(yandexIntent)
+            return
+        }
+        // Fallback: try Yandex Maps scheme
+        val ymapsUri = Uri.parse("yandexmaps://maps.yandex.ru/?pt=$lng,$lat&z=16&l=map")
+        val ymapsIntent = Intent(Intent.ACTION_VIEW, ymapsUri)
+        if (ymapsIntent.resolveActivity(requireActivity().packageManager) != null) {
+            startActivity(ymapsIntent)
+            return
+        }
+        // Final fallback: Google Maps geo: URI
+        val gmmIntent = Intent(Intent.ACTION_VIEW,
+            Uri.parse("geo:$lat,$lng?q=$lat,$lng(${Uri.encode(title)})"))
+        startActivity(Intent.createChooser(gmmIntent, getString(R.string.detail_btn_route)))
+    }
 
     private fun shareCurrent() {
         val title = binding.tvDetailTitle.text.toString()

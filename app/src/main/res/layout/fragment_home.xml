@@ -174,19 +174,38 @@
 
             <!-- Recent kindergartens -->
             <LinearLayout
+                android:id="@+id/section_recent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:orientation="vertical"
                 android:paddingHorizontal="20dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/home_recent"
-                    android:textColor="@color/mamsad_ink"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/home_recent"
+                        android:textColor="@color/mamsad_ink"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_recent_clear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:text="@string/home_recent_clear"
+                        android:textColor="@color/mamsad_coral"
+                        android:textSize="12sp"
+                        android:visibility="gone" />
+                </LinearLayout>
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -200,6 +219,17 @@
                         android:overScrollMode="never"
                         android:nestedScrollingEnabled="false"
                         tools:listitem="@layout/item_kindergarten_card" />
+
+                    <TextView
+                        android:id="@+id/tv_recent_empty"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="20dp"
+                        android:gravity="center"
+                        android:text="@string/home_recent_empty"
+                        android:textColor="@color/mamsad_ink_mute"
+                        android:textSize="13sp"
+                        android:visibility="gone" />
 
                     <ProgressBar
                         android:id="@+id/progress_recent"

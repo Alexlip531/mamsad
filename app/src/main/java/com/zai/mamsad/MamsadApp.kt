@@ -16,7 +16,8 @@ class MamsadApp : Application() {
         MamsadRepository(
             dao = database.orgDao(),
             adminDao = database.adminDao(),
-            voteDao = database.voteDao()
+            voteDao = database.voteDao(),
+            recentDao = database.recentDao()
         )
     }
 

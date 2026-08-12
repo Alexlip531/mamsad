@@ -2,12 +2,14 @@ package com.zai.mamsad.ui.catalog
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.zai.mamsad.R
 import com.zai.mamsad.data.OrgEntity
 import com.zai.mamsad.databinding.ItemKindergartenCardBinding
+import java.util.Locale
 
 class KindergartenAdapter(
     private val onClick: (OrgEntity) -> Unit,
@@ -31,6 +33,17 @@ class KindergartenAdapter(
             tvCity.text = item.cityName
             tvType.text = item.typeName
             tvExcerpt.text = item.excerpt.ifBlank { root.context.getString(R.string.catalog_loading) }
+
+            // Rating badge — show only if org has a scraped rating > 0
+            val r = item.rating
+            if (r != null && r > 0f) {
+                badgeRatingRow.isVisible = true
+                tvRatingValue.text = String.format(Locale.US, "%.1f", r)
+                tvRatingCount.text = if (item.reviewCount > 0) "(${item.reviewCount})" else ""
+                tvRatingCount.isVisible = item.reviewCount > 0
+            } else {
+                badgeRatingRow.isVisible = false
+            }
 
             // Favorite state
             btnFavorite.isSelected = item.isFavorite

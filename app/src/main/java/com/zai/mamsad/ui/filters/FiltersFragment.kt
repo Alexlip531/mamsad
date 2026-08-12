@@ -42,6 +42,7 @@ class FiltersFragment : Fragment() {
             SortMode.NEW -> binding.rbSortNew.isChecked = true
             SortMode.ALPHA -> binding.rbSortAlpha.isChecked = true
             SortMode.CITY -> binding.rbSortCity.isChecked = true
+            SortMode.RATING -> binding.rbSortRating.isChecked = true
         }
 
         // Search input — apply live
@@ -55,6 +56,7 @@ class FiltersFragment : Fragment() {
                 R.id.rb_sort_new -> viewModel.setSort(SortMode.NEW)
                 R.id.rb_sort_alpha -> viewModel.setSort(SortMode.ALPHA)
                 R.id.rb_sort_city -> viewModel.setSort(SortMode.CITY)
+                R.id.rb_sort_rating -> viewModel.setSort(SortMode.RATING)
             }
         }
 

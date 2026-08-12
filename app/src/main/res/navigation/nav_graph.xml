@@ -74,6 +74,10 @@
         android:id="@+id/nav_map"
         android:name="com.zai.mamsad.ui.map.MapFragment"
         android:label="@string/map_title">
+        <argument
+            android:name="focusOrgId"
+            app:argType="integer"
+            android:defaultValue="0" />
         <action
             android:id="@+id/action_map_to_detail"
             app:destination="@id/nav_detail" />
@@ -145,5 +149,8 @@
         <argument
             android:name="orgId"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_detail_to_map"
+            app:destination="@id/nav_map" />
     </fragment>
 </navigation>

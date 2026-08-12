@@ -24,4 +24,4 @@ data class CatalogFilter(
         }
 }
 
-enum class SortMode { NEW, ALPHA, CITY }
+enum class SortMode { NEW, ALPHA, CITY, RATING }

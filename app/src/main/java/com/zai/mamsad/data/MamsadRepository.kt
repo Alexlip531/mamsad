@@ -34,6 +34,7 @@ class MamsadRepository(
     private val dao: OrgDao,
     private val adminDao: AdminDao,
     private val voteDao: VoteDao,
+    private val recentDao: RecentDao,
     private val overridesUrl: String = DEFAULT_OVERRIDES_URL
 ) {
 
@@ -69,6 +70,24 @@ class MamsadRepository(
         val n = all.size
         val avg = if (n == 0) 0f else all.map { it.rating }.average().toFloat()
         return VoteStats(count = n, average = avg)
+    }
+
+    // ============================================================
+    // Recently viewed (local, per-device)
+    // ============================================================
+    fun observeRecentIds(limit: Int = 10): Flow<List<RecentView>> =
+        recentDao.observeRecent(limit)
+
+    /**
+     * Mark an org as recently viewed. Bumps its viewedAt to now.
+     * Safe to call on every detail open.
+     */
+    suspend fun markViewed(orgId: Int) {
+        recentDao.upsert(RecentView(orgId = orgId, viewedAt = System.currentTimeMillis()))
+    }
+
+    suspend fun clearRecent() {
+        recentDao.clearAll()
     }
 
     suspend fun fetchOrgs(): Result<List<OrgEntity>> = runCatching {
@@ -181,6 +200,7 @@ class MamsadRepository(
             SortMode.NEW -> rest.sortedByDescending { it.date }
             SortMode.ALPHA -> rest.sortedBy { it.title.lowercase() }
             SortMode.CITY -> rest.sortedWith(compareBy({ it.cityName }, { it.title.lowercase() }))
+            SortMode.RATING -> rest.sortedByDescending { it.rating ?: 0f }
         }
         return featured + sortedRest
     }

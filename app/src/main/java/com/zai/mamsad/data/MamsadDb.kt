@@ -6,14 +6,15 @@ import androidx.room.RoomDatabase
 import android.content.Context
 
 @Database(
-    entities = [OrgEntity::class, AdminOverride::class, Vote::class],
-    version = 3,
+    entities = [OrgEntity::class, AdminOverride::class, Vote::class, RecentView::class],
+    version = 4,
     exportSchema = false
 )
 abstract class MamsadDb : RoomDatabase() {
     abstract fun orgDao(): OrgDao
     abstract fun adminDao(): AdminDao
     abstract fun voteDao(): VoteDao
+    abstract fun recentDao(): RecentDao
 
     companion object {
         @Volatile private var INSTANCE: MamsadDb? = null

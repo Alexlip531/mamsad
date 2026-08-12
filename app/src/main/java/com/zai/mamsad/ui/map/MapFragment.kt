@@ -31,6 +31,14 @@ class MapFragment : Fragment() {
 
     private var mapView: MapView? = null
 
+    /**
+     * Optional orgId passed from DetailFragment ("Показать на карте").
+     * If set, the map zooms in on this org and shows its card on resume.
+     */
+    private val focusOrgId: Int? by lazy {
+        arguments?.getInt("focusOrgId")?.takeIf { it != 0 }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -116,6 +124,18 @@ class MapFragment : Fragment() {
                 (lngs.min() + lngs.max()) / 2.0
             )
             map.controller.setCenter(center)
+        }
+
+        // If opened from Detail ("Показать на карте"), focus the requested org
+        val fid = focusOrgId
+        if (fid != null) {
+            val focusOrg = withCoords.firstOrNull { it.id == fid }
+            if (focusOrg != null) {
+                val point = GeoPoint(focusOrg.lat!!, focusOrg.lng!!)
+                map.controller.setCenter(point)
+                map.controller.setZoom(15.0)
+                showOrgCard(focusOrg)
+            }
         }
 
         binding.stateLoading.isVisible = false

@@ -136,6 +136,15 @@
                     android:textColor="@color/mamsad_ink"
                     android:paddingVertical="6dp"
                     android:buttonTint="@color/mamsad_coral" />
+
+                <RadioButton
+                    android:id="@+id/rb_sort_rating"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/filters_sort_rating"
+                    android:textColor="@color/mamsad_ink"
+                    android:paddingVertical="6dp"
+                    android:buttonTint="@color/mamsad_coral" />
             </RadioGroup>
 
             <View

@@ -67,6 +67,7 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.action_home_to_filters)
         }
         binding.btnRetryHome.setOnClickListener { viewModel.refresh() }
+        binding.tvRecentClear.setOnClickListener { viewModel.clearRecent() }
 
         // Tools cards
         binding.cardArticles.setOnClickListener {
@@ -85,7 +86,8 @@ class HomeFragment : Fragment() {
         // Observe state
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch { observeOrgs() }
+                launch { observeTotalCount() }
+                launch { observeRecent() }
                 launch { observeCities() }
                 launch { observeRefreshing() }
                 launch { observeError() }
@@ -109,18 +111,23 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private suspend fun observeOrgs() {
+    private suspend fun observeTotalCount() {
         viewModel.filteredOrgs.collect { items ->
-            // Total count
             binding.tvTotalCount.text = items.size.toString()
+        }
+    }
 
-            // Recent (just take first 5 newest — already sorted desc by default filter)
-            val recent = items.take(5)
+    private suspend fun observeRecent() {
+        viewModel.recentOrgs.collect { recent ->
             if (recent.isEmpty()) {
                 binding.rvRecent.visibility = View.GONE
+                binding.tvRecentEmpty.visibility = View.VISIBLE
+                binding.tvRecentClear.visibility = View.GONE
             } else {
                 binding.rvRecent.visibility = View.VISIBLE
-                recentAdapter.submitList(recent)
+                binding.tvRecentEmpty.visibility = View.GONE
+                binding.tvRecentClear.visibility = View.VISIBLE
+                recentAdapter.submitList(recent.take(5))
             }
         }
     }

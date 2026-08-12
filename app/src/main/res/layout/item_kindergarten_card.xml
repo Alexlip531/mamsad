@@ -114,6 +114,47 @@
                 android:maxLines="2"
                 android:ellipsize="end"
                 tools:text="Сад с углублённой подготовкой к школе и английским языком." />
+
+            <!-- Rating badge row (only visible when org has a rating) -->
+            <LinearLayout
+                android:id="@+id/badge_rating_row"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@drawable/bg_rating_pill"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="2dp"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="★"
+                    android:textColor="@color/mamsad_sun"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_rating_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
+                    android:textColor="@color/mamsad_ink"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    tools:text="4.6" />
+
+                <TextView
+                    android:id="@+id/tv_rating_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:textColor="@color/mamsad_ink_mute"
+                    android:textSize="11sp"
+                    tools:text="(11)" />
+            </LinearLayout>
         </LinearLayout>
 
         <!-- Favorite button -->
